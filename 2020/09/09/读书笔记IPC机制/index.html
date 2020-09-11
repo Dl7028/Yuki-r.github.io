@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="读书笔记 | IPC机制 一、Android IPC简介IPC是Inter-Process Communication的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。 看到这里，需要先了解一下进程、线程以及它们的关系。   进程：一般指一个执行单元，在PC和移动设备上指一个程序或应用。  线程：CPU调度的最小单元。线程是一种有限的系统资源。 二者之间的关系： 一个进程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yuki-r Blog">
+<meta property="og:url" content="http://example.com/2020/09/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0IPC%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Yuki-r Blog">
+<meta property="og:description" content="读书笔记 | IPC机制 一、Android IPC简介IPC是Inter-Process Communication的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。 看到这里，需要先了解一下进程、线程以及它们的关系。   进程：一般指一个执行单元，在PC和移动设备上指一个程序或应用。  线程：CPU调度的最小单元。线程是一种有限的系统资源。 二者之间的关系： 一个进程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200909230910.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200910205858.png">
+<meta property="article:published_time" content="2020-09-09T15:10:31.638Z">
+<meta property="article:modified_time" content="2020-09-10T15:22:05.602Z">
+<meta property="article:author" content="Yuki">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200909230910.png">
+
+<link rel="canonical" href="http://example.com/2020/09/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0IPC%E6%9C%BA%E5%88%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Yuki-r Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yuki-r Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0IPC%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/suoda.jpg">
+      <meta itemprop="name" content="Yuki">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuki-r Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-09 23:10:31" itemprop="dateCreated datePublished" datetime="2020-09-09T23:10:31+08:00">2020-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-10 23:22:05" itemprop="dateModified" datetime="2020-09-10T23:22:05+08:00">2020-09-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="读书笔记-IPC机制"><a href="#读书笔记-IPC机制" class="headerlink" title="读书笔记 | IPC机制"></a>读书笔记 | IPC机制</h1><p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200909230910.png"></p>
+<h2 id="一、Android-IPC简介"><a href="#一、Android-IPC简介" class="headerlink" title="一、Android IPC简介"></a>一、Android IPC简介</h2><p>IPC是Inter-Process Communication的缩写，含义为进程间通信或者跨进程通信，是指两个进程之间进行数据交换的过程。</p>
+<p>看到这里，需要先了解一下进程、线程以及它们的关系。</p>
+<blockquote>
+<ul>
+<li><p>进程：一般指一个执行单元，在PC和移动设备上指一个<strong>程序</strong>或<strong>应用</strong>。</p>
+</li>
+<li><p>线程：CPU调度的最小单元。线程是一种有限的系统资源。</p>
+<p>二者之间的关系：</p>
+<p>一个<strong>进程</strong>可包含多个<strong>线程</strong>，即一个应用程序上可以同时执行多个任务。</p>
+<p>注意：不可在主线程做大量耗时操作，会导致<strong>ANR</strong>（应用无响应）。</p>
+</li>
+</ul>
+</blockquote>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200910205858.png"></p>
+<p>IPC不是Android中所独有的，任何一个操作系统都需要有相应的IPC机制，Binder是Android中最有特色的进程间通信方式。</p>
+<h2 id="二、Android-中的多进程模式"><a href="#二、Android-中的多进程模式" class="headerlink" title="二、Android 中的多进程模式"></a>二、Android 中的多进程模式</h2><h3 id="2-1开启进程"><a href="#2-1开启进程" class="headerlink" title="2.1开启进程"></a>2.1开启进程</h3><blockquote>
+<ul>
+<li>（常规）在AndroidMenifest中给四大组件指定属性<code>android:process</code>。</li>
+<li>（不常规）通过JNI在native层fork一个新的进程。</li>
+</ul>
+</blockquote>
+<p>进程名的默认规则：</p>
+<p>默认进程：</p>
+<ul>
+<li>没有指定该属性则运行在默认进程，其进程名就是<strong>包名</strong>。</li>
+</ul>
+<p>以“：”开头的进程：</p>
+<ul>
+<li>省略包名，如<code>android:process=&quot;:remote&quot;</code>，表示进程名为<code>com.example.myapplication:remote</code>。</li>
+<li>属于当前应用的<strong>私有进程</strong>，其他进程的组件不能和他跑在同一进程中。</li>
+</ul>
+<p>完整命名的进程：</p>
+<ul>
+<li>如<code>android:process=&quot;com.example.myapplication.remote&quot;</code>。</li>
+<li>属于<strong>全局进程</strong>，其他应用可以通过<strong>ShareUID</strong>方式和他跑在用一个进程中。</li>
+</ul>
+<blockquote>
+<p>UID: Android系统会为每个应用分配一个唯一的UID，具有相同的UID才能共享数据。</p>
+<p>两个应用通过ShareUID跑在同一个进程中的条件：具有相同的ShareUID和签名。</p>
+<ul>
+<li>满足上述条件的两个应用，无论是否跑在同一进程，它们可共享data目录，组件信息。</li>
+<li>若跑在同一进程，它们除了可共享data目录、组件信息，还可共享内存数据。它们就像是一个应用的两个部分。</li>
+</ul>
+</blockquote>
+<h3 id="2-2多进程的运行机制"><a href="#2-2多进程的运行机制" class="headerlink" title="2.2多进程的运行机制"></a>2.2多进程的运行机制</h3><p>Android为每一个进程分配了一个独立的虚拟机，不同虚拟机在内存分配上有<strong>不同的地址空间</strong>，这也导致了不同虚拟机中访问同一个对象会产生<strong>多份副本</strong>。</p>
+<p>一般来说使用多进程会带来以下四个方面的问题：</p>
+<blockquote>
+<ul>
+<li><p>静态变量和单例模式失效       原因：不同虚拟机中访问同一个对象会产生<strong>多份副本</strong>。</p>
+</li>
+<li><p>线程同步机制失效                  原因：内存不同，线程无法同步。</p>
+</li>
+<li><p>SharedPreference的可靠性下降      原因：底层是通过读写XML文件实现的，发生并发问题。</p>
+</li>
+<li><p>Application多次创建-                         原因：Android系统会为新的进程分配独立虚拟机，相当于应用重新启动了一次。</p>
+</li>
+</ul>
+</blockquote>
+<p>为了解决这些问题，可以采用跨进程通信方法，通过Intent，共享文件和SharedPreferences，Messenger、AIDL和Socket等。</p>
+<h2 id="三、IPC基础概念"><a href="#三、IPC基础概念" class="headerlink" title="三、IPC基础概念"></a>三、IPC基础概念</h2><p>在了解以下三种接口使用前，需要先了解一下什么是序列化和反序列化。</p>
+<p>1.什么是序列化？</p>
+<blockquote>
+<p>含义：序列化表示将一个对象转换成<strong>可存储或可传输</strong>的状态。序列化后的对象可以在网络上进行传输，也可以存储到本地。</p>
+<p>场景：需要通过Intent和Binder等传输<strong>类对象</strong>就必须完成对象的序列化过程。</p>
+<p>两种方式：实现Serializable/Parcelable接口。</p>
+</blockquote>
+<p>2.什么是反序列化？</p>
+<p>把字节序列恢复为对象的过程称为对象的反序列化，是序列化的逆过程。</p>
+<h3 id="3-1Serializable接口"><a href="#3-1Serializable接口" class="headerlink" title="3.1Serializable接口"></a>3.1Serializable接口</h3><p>Serializable是Java所提供的一个序列化接口，是一个空接口，为对象提供标准的序列化和反序列化操作。</p>
+<h3 id="3-2Parcelable接口"><a href="#3-2Parcelable接口" class="headerlink" title="3.2Parcelable接口"></a>3.2Parcelable接口</h3><h3 id="3-3Binder"><a href="#3-3Binder" class="headerlink" title="3.3Binder"></a>3.3Binder</h3><h2 id="四、Android中的IPC模式"><a href="#四、Android中的IPC模式" class="headerlink" title="四、Android中的IPC模式"></a>四、Android中的IPC模式</h2><h3 id="4-1Bundle"><a href="#4-1Bundle" class="headerlink" title="4.1Bundle"></a>4.1Bundle</h3><h3 id="4-2文件共享"><a href="#4-2文件共享" class="headerlink" title="4.2文件共享"></a>4.2文件共享</h3><h3 id="4-3Messenger"><a href="#4-3Messenger" class="headerlink" title="4.3Messenger"></a>4.3Messenger</h3><h3 id="4-4使用AIDL"><a href="#4-4使用AIDL" class="headerlink" title="4.4使用AIDL"></a>4.4使用AIDL</h3><h3 id="4-5使用ContentProvider"><a href="#4-5使用ContentProvider" class="headerlink" title="4.5使用ContentProvider"></a>4.5使用ContentProvider</h3><h3 id="4-6Socket"><a href="#4-6Socket" class="headerlink" title="4.6Socket"></a>4.6Socket</h3><h2 id="五、Binder连接池"><a href="#五、Binder连接池" class="headerlink" title="五、Binder连接池"></a>五、Binder连接池</h2><h2 id="六、IPC方式"><a href="#六、IPC方式" class="headerlink" title="六、IPC方式"></a>六、IPC方式</h2><p>各种IPC方式的优缺点比较：</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Bundle</td>
+<td align="center">简单易用</td>
+<td>只能传输Bundle支持的数据类型</td>
+<td>四大组件间的进程间通信</td>
+</tr>
+<tr>
+<td align="center">文件共享</td>
+<td align="center">简单易用</td>
+<td>不适合高并发场景，无法做到进程间的即时通信</td>
+<td>无并发访问，交换简单数据且实时性不高</td>
+</tr>
+<tr>
+<td align="center">AIDL</td>
+<td align="center">支持一对多并发和实时通信</td>
+<td>使用稍复杂，需要处理线程同步</td>
+<td>一对多且有RPC需求</td>
+</tr>
+<tr>
+<td align="center">Messenger</td>
+<td align="center">支持一对多串行通信</td>
+<td>不能很好处理高并发，不支持<code>RPC</code>，只能传输Bundle支持的数据类型</td>
+<td>低并发的一对多</td>
+</tr>
+<tr>
+<td align="center">ContentProvider</td>
+<td align="center">支持一对多并发数据共享</td>
+<td>可理解为受约束的AIDL</td>
+<td>一对多进程间数据共享</td>
+</tr>
+<tr>
+<td align="center">Socket</td>
+<td align="center">支持一对多并发数据共享</td>
+<td>实现细节繁琐</td>
+<td>网络数据交换</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="prev" title="读书笔记|Activity的生命周期和启动模式">
+      <i class="fa fa-chevron-left"></i> 读书笔记|Activity的生命周期和启动模式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/11/%E5%8D%8E%E4%B8%BA%E9%B8%BF%E8%92%99%E7%B3%BB%E7%BB%9F%EF%BC%8C%E8%BF%90%E8%A1%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E2%80%9Chello%20world%E2%80%9D/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-IPC%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">读书笔记 | IPC机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Android-IPC%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">一、Android IPC简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Android-%E4%B8%AD%E7%9A%84%E5%A4%9A%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">二、Android 中的多进程模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E5%BC%80%E5%90%AF%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1开启进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2多进程的运行机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81IPC%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.3.</span> <span class="nav-text">三、IPC基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1Serializable%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1Serializable接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2Parcelable%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2Parcelable接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3Binder"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3Binder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Android%E4%B8%AD%E7%9A%84IPC%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">四、Android中的IPC模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1Bundle"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1Bundle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2文件共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3Messenger"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3Messenger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4%E4%BD%BF%E7%94%A8AIDL"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4使用AIDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5%E4%BD%BF%E7%94%A8ContentProvider"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5使用ContentProvider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6Socket"><span class="nav-number">1.4.6.</span> <span class="nav-text">4.6Socket</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Binder%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-number">1.5.</span> <span class="nav-text">五、Binder连接池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81IPC%E6%96%B9%E5%BC%8F"><span class="nav-number">1.6.</span> <span class="nav-text">六、IPC方式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yuki"
+      src="/images/suoda.jpg">
+  <p class="site-author-name" itemprop="name">Yuki</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yuki-r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yuki-r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yuki</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
