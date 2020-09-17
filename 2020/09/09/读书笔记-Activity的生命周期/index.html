@@ -20,19 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="学习清单： Activity的生命周期 Activity的启动模式 IntentFilter的匹配规则  1.1Activity的生命周期全面分析1.1.1典型情况下的生命周期分析">
+  <meta name="description" content="前言： Activity作为四大组件之一，中文翻译直接翻译为“活动”，是日常应用中与用户交互的接口，它提供了供用户操作的窗口，正常情况下，除了Window、Dialog和Toast,我们能见到的界面只有Activity。  学习清单：  Activity的生命周期 Activity的启动模式 IntentFilter的匹配规则  一、Activity的生命周期1.1 典型情况下的生命周期分析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="读书笔记|Activity的生命周期和启动模式">
 <meta property="og:url" content="http://example.com/2020/09/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
 <meta property="og:site_name" content="Yuki-r Blog">
-<meta property="og:description" content="学习清单： Activity的生命周期 Activity的启动模式 IntentFilter的匹配规则  1.1Activity的生命周期全面分析1.1.1典型情况下的生命周期分析">
+<meta property="og:description" content="前言： Activity作为四大组件之一，中文翻译直接翻译为“活动”，是日常应用中与用户交互的接口，它提供了供用户操作的窗口，正常情况下，除了Window、Dialog和Toast,我们能见到的界面只有Activity。  学习清单：  Activity的生命周期 Activity的启动模式 IntentFilter的匹配规则  一、Activity的生命周期1.1 典型情况下的生命周期分析">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908201249.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200913232812.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200913233930.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200913234225.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908210019.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908220815.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908220947.png">
 <meta property="article:published_time" content="2020-09-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-09T15:03:25.054Z">
+<meta property="article:modified_time" content="2020-09-13T16:06:22.086Z">
 <meta property="article:author" content="Yuki">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908201249.png">
@@ -177,10 +180,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-09-09 00:00:00 / 修改时间：23:03:25" itemprop="dateCreated datePublished" datetime="2020-09-09T00:00:00+08:00">2020-09-09</time>
+              <time title="创建时间：2020-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2020-09-09T00:00:00+08:00">2020-09-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-14 00:06:22" itemprop="dateModified" datetime="2020-09-14T00:06:22+08:00">2020-09-14</time>
+              </span>
 
           
 
@@ -193,116 +202,161 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="学习清单："><a href="#学习清单：" class="headerlink" title="学习清单："></a>学习清单：</h2><ul>
-<li>Activity的生命周期</li>
-<li>Activity的启动模式</li>
-<li>IntentFilter的匹配规则</li>
+        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><blockquote>
+<p>Activity作为四大组件之一，中文翻译直接翻译为“活动”，是日常应用中与用户交互的接口，它提供了供用户操作的窗口，正常情况下，除了Window、Dialog和Toast,我们能见到的界面只有Activity。</p>
+</blockquote>
+<p><strong>学习清单</strong>：</p>
+<ul>
+<li><code>Activity</code>的生命周期</li>
+<li><code>Activity</code>的启动模式</li>
+<li><code>IntentFilter</code>的匹配规则</li>
 </ul>
-<h2 id="1-1Activity的生命周期全面分析"><a href="#1-1Activity的生命周期全面分析" class="headerlink" title="1.1Activity的生命周期全面分析"></a>1.1Activity的生命周期全面分析</h2><h3 id="1-1-1典型情况下的生命周期分析"><a href="#1-1-1典型情况下的生命周期分析" class="headerlink" title="1.1.1典型情况下的生命周期分析"></a>1.1.1典型情况下的生命周期分析</h3><a id="more"></a>
+<h2 id="一、Activity的生命周期"><a href="#一、Activity的生命周期" class="headerlink" title="一、Activity的生命周期"></a>一、<code>Activity</code>的生命周期</h2><h3 id="1-1-典型情况下的生命周期分析"><a href="#1-1-典型情况下的生命周期分析" class="headerlink" title="1.1 典型情况下的生命周期分析"></a>1.1 典型情况下的生命周期分析</h3><a id="more"></a>
 
-<p><strong>正常情况下，Activity常用生命周期有以下七种</strong></p>
-<p>（1）onCreate：表示Activity正在被创建，生命周期的第一个方法。</p>
-<p>（2）onRestart：表示Activity正在重新启动。</p>
-<p>（3）onStart：表示Activity正在被启动。</p>
-<p>（4）onResume：表示Activity是可见的，出现在前台并且开始活动。</p>
-<p>（5）onPause：表示Activity正在停止。</p>
-<p>（6）onStop：表示Activity即将停止。</p>
-<p>（7）onDestory：表示Activity即将被销毁。</p>
+<h4 id="1-1-2-Activity常用的生命周期"><a href="#1-1-2-Activity常用的生命周期" class="headerlink" title="1.1.2 Activity常用的生命周期"></a>1.1.2 Activity常用的生命周期</h4><blockquote>
+<ul>
+<li><code>onCreate</code>：表示<code>Activity</code>正在被创建，生命周期的第一个方法。</li>
+<li><code>onRestart</code>：表示<code>Activity</code>正在重新启动。</li>
+<li><code>onStart</code>：表示<code>Activity</code>正在被启动。</li>
+<li><code>onResume</code>：表示<code>Activity</code>是可见的，出现在前台并且开始活动。</li>
+<li><code>onPause</code>：表示<code>Activity</code>正在停止。</li>
+<li><code>onStop</code>：表示<code>Activity</code>即将停止。</li>
+<li><code>onDestory</code>：表示<code>Activity</code>即将被销毁。</li>
+</ul>
+</blockquote>
 <p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908201249.png"></p>
 <p>​                                                                                            图 1-1</p>
-<p><strong>一个Activity生命周期中，有可能出现这几种情况：</strong></p>
-<p>（1）Activity第一次启动时，回调有：onCreate -&gt; onStart -&gt; onResume。</p>
-<p>（2）用户打开新的Activity或者切换到桌面时：onPause -&gt; onStop。若Activity采用了透明主题，则Activity不会回调onStop。 </p>
-<p>（3）用户再回到原Activity时：onResume -&gt; onStart -&gt; onResume。</p>
-<p>（4）用户按Back键回退时：onPause -&gt; onStop -&gt; onDestroy。</p>
-<p>（5）当Activity被系统回收再打开时，生命周期与（1）一样。</p>
-<p>（9）onCreate和onDestroy分别标识着Activity的创建和销毁，在整个生命周期中只有一次调用。</p>
-<p>​            onStart和onStop分别标识着Activity的开始和停止，前者Activity可见，后者Avtivity不可见。</p>
-<p>​            onResume和onPause分别标识着Activity的继续和暂停。前者Activity在前台，后者Activity在后台。</p>
-<h3 id="1-1-2-异常情况下的生命周期分析"><a href="#1-1-2-异常情况下的生命周期分析" class="headerlink" title="1.1.2 异常情况下的生命周期分析"></a>1.1.2 异常情况下的生命周期分析</h3><p><strong>1.资源相关的系统配置发生改变导致Activity被杀死并重新创建</strong></p>
-<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908210019.png"></p>
-<p>​                                                                                        图1-2</p>
-<p>举个例子：当前Activity处于竖屏状态，如果突然旋转屏幕，由于系统配置发生了改变，在默认情况下，Activity就会被销毁并重新创建，其生命周期如图1-2所示。</p>
-<p>分析：当系统配置发生更改后，Activity会被销毁，其onPause、onStop、onDestroy都会被调用，由于Activity是在异常情况下终止的，系统会调用onSaveInstanceState来保存当前Activity的状态（这个方法只会出现在Activity异常终止的情况下，正常情况下不会调用这个方法）。</p>
-<p>当Activity被重新创建后，系统会调用onRestoreInstanceState，并且把Activity销毁时onSaveInstanceState方法所保存的Bundle对象作为参数传递给onRestoreInstanceState和onCreate方法。因此，可以通过onRestoreInstanceState和onCreate方法来判断Activity是否被重建了，如果被重建了，我们就可以取出之前保存的数据并恢复，从时序上来说，onRestoreInstanceState的调用时机在onStart之后。</p>
-<p><strong>2.资源内存不足导致优先级低的Activity被杀死</strong></p>
-<p>Activity优先级从高到低可以分为以下三种：</p>
-<p>（1）前台Activity ——正在和用户交互的Activity，优先级最高。</p>
-<p>（2）可见但并非前台Activity——比如Activity中弹出一个对话框，导致Activity可见，但是位于后台无法和用户交互。</p>
-<p>（3）后台Activity——已经被暂停的Activity，比如执行了onStop，优先级最低。</p>
-<p>当系统内存不足时，系统就会按照上述优先级去杀死目标Activity所在的进程，并在后续onSaveInstanceState和onRestoreInstanceState来存储和恢复数据。</p>
-<h2 id="1-2Activity的启动模式"><a href="#1-2Activity的启动模式" class="headerlink" title="1.2Activity的启动模式"></a>1.2Activity的启动模式</h2><h3 id="1-2-1-Activity-的LaunchMode"><a href="#1-2-1-Activity-的LaunchMode" class="headerlink" title="1.2.1 Activity 的LaunchMode"></a>1.2.1 Activity 的LaunchMode</h3><p>任务栈：一种“先进后出”的栈结构，存放Activity实例。</p>
-<p><strong>四种启动模式</strong></p>
-<p>（1）standard：标准模式，也是系统的默认模式，每次启动Activity都会重新创建一个新的实例，不管这个实例是否已经存在。</p>
-<p>（2）singleTop：栈顶复用模式，如果新的Activity位于任务栈的栈顶，那么此Activity不会被重新创建，同时它的onNewIntent方法会回调。</p>
-<p>（3）singleTask：栈内复用模式。一种单实例模式，在这种模式下，只要Activity在一个栈中存在，那么多次启动此Activity都不会重新创建实例，和singleTop一样，系统也会回调onNewIntent。</p>
+<p><strong>问：一个Activity的生命周期中可能会出现哪几种情况？</strong></p>
+<p>（1）<code>Activity</code>第一次启动时，回调有：<code>onCreate</code> -&gt; <code>onStart</code> -&gt; <code>onResume</code>。</p>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200913232812.png"></p>
+<p>（2）用户打开新的Activity或者切换到桌面时：<code>onPause</code> -&gt; <code>onStop</code>。若Activity采用了透明主题，则<code>Activity</code>不会回调<code>onStop</code>。 </p>
+<p>（3）用户再回到原Activity时：<code>onRestart</code> -&gt; <code>onStart</code> -&gt; <code>onResume</code>。</p>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200913233930.png"></p>
+<p>（4）用户按Back键回退时：<code>onPause</code> -&gt; <code>onStop</code> -&gt; <code>onDestroy</code>。</p>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200913234225.png"></p>
+<p>（5）当<code>Activity</code>被系统回收再打开时，生命周期与（1）一样。</p>
+<p>（9）<code>onCreate</code>和<code>onDestroy</code>分别标识着<code>Activity</code>的创建和销毁，在整个生命周期中只有一次调用。</p>
+<p>问：<code>onStart</code>、<code>onStop</code>和<code>onResume</code>、<code>onPause</code>有什么区别？</p>
+<blockquote>
 <ul>
-<li>比如任务栈S1中有ABC，这个时候Activity D以singleTask模式请求启动，其所需的任务栈为S2，由于S2和D的实例都不存在，系统会先创建任务栈S2，然后再创建D的实例并将其入栈到S2。</li>
-<li>假设D所需的任务栈为S1，其他情况与上述一样，由于S1存在，所以系统会直接创建D 的实例并将其入栈到S1。</li>
-<li>如果D所需的任务栈为S1，并且当前任务栈S1的情况为ADBC，此时D不会被创建，系统会把D切换到栈顶并调用其onNewIntent方法，singleTask默认具有clearTop效果，导致栈内所有在D上面的Activity全部出栈，最终S1中的情况为AD。</li>
+<li><code>onStart</code>和<code>onStop</code>分别标识着<code>Activity</code>的开始和停止，前者<code>Activity</code>可见，后者<code>Activity</code>不可见。</li>
+<li><code>onResume</code>和<code>onPause</code>分别标识着<code>Activity</code>的继续和暂停。前者<code>Activity</code>在前台，后者<code>Activity</code>在后台。</li>
 </ul>
-<p>（4）singleInstance：单实例模式，一种加强的singleTask模式，除了singTask模式的所有特性外，还加强了一点，那就是具有此种模式的Activity只能单独地位于一个任务栈中。</p>
-<p>举个启动模式的小例子：假设目前有两个任务栈，前台任务栈情况为AB，而后台任务栈情况为CD，假设CD的启动模式均为singleTask。现在请求启动D，那么整个后台任务都会切换到前台，这个时候按下back键的后退列表为ABCD，如图1-3。如果请求启动D而不是启动C，后退列表为ABC，如图1-4。</p>
+</blockquote>
+<h3 id="1-2-异常情况下的生命周期分析"><a href="#1-2-异常情况下的生命周期分析" class="headerlink" title="1.2 异常情况下的生命周期分析"></a>1.2 异常情况下的生命周期分析</h3><h4 id="1-2-1-资源相关的系统配置发生改变导致Activity被杀死并重新创建"><a href="#1-2-1-资源相关的系统配置发生改变导致Activity被杀死并重新创建" class="headerlink" title="1.2.1 资源相关的系统配置发生改变导致Activity被杀死并重新创建"></a>1.2.1 资源相关的系统配置发生改变导致<code>Activity</code>被杀死并重新创建</h4><p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908210019.png"></p>
+<p>​                                                                                        图1-2</p>
+<p>举个例子：当前<code>Activity</code>处于竖屏状态，如果突然旋转屏幕，由于系统配置发生了改变，在默认情况下，<code>Activity</code>就会被销毁并重新创建，其生命周期如图1-2所示。</p>
+<blockquote>
+<p>分析：当系统配置发生更改后，<code>Activity</code>会被销毁，其<code>onPause</code>、<code>onStop</code>、<code>onDestroy</code>都会被调用，由于<code>Activity</code>是在异常情况下终止的，系统会调用<code>onSaveInstanceState</code>来保存当前<code>Activity</code>的状态（这个方法只会出现在<code>Activity</code>异常终止的情况下，正常情况下不会调用这个方法）。</p>
+</blockquote>
+<p>当<code>Activity</code>被重新创建后，系统会调用<code>onRestoreInstanceState</code>，并且把<code>Activity</code>销毁时<code>onSaveInstanceState</code>方法所保存的Bundle对象作为参数传递给<code>onRestoreInstanceState</code>和<code>onCreate</code>方法。</p>
+<p>因此，可以通过<code>onRestoreInstanceState</code>和<code>onCreate</code>方法来判断Activity是否被重建了，如果被重建了，我们就可以取出之前保存的数据并恢复，从时序上来说，<code>onRestoreInstanceState</code>的调用时机在<code>onStart</code>之后。</p>
+<h4 id="1-1-2资源内存不足导致优先级低的Activity被杀死"><a href="#1-1-2资源内存不足导致优先级低的Activity被杀死" class="headerlink" title="1.1.2资源内存不足导致优先级低的Activity被杀死"></a>1.1.2资源内存不足导致优先级低的Activity被杀死</h4><p>Activity优先级从高到低可以分为以下三种：</p>
+<blockquote>
+<ul>
+<li><p>前台<code>Activity</code> ——正在和用户交互的<code>Activity</code>，优先级最高。</p>
+</li>
+<li><p>可见但并非前台<code>Activity</code>——比如<code>Activity</code>中弹出一个对话框，导致<code>Activity</code>可见，但是位于后台无法和用户交互。</p>
+</li>
+<li><p>后台<code>Activity</code>——已经被暂停的<code>Activity</code>，比如执行了<code>onStop</code>，优先级最低。</p>
+</li>
+</ul>
+</blockquote>
+<p>当系统内存不足时，系统就会按照上述优先级去杀死目标<code>Activity</code>所在的进程，并在后续<code>onSaveInstanceState</code>和<code>onRestoreInstanceState</code>来存储和恢复数据。</p>
+<h2 id="1-2-Activity的启动模式"><a href="#1-2-Activity的启动模式" class="headerlink" title="1.2 Activity的启动模式"></a>1.2 <code>Activity</code>的启动模式</h2><h3 id="1-2-1-Activity-的LaunchMode"><a href="#1-2-1-Activity-的LaunchMode" class="headerlink" title="1.2.1 Activity 的LaunchMode"></a>1.2.1 <code>Activity</code> 的<code>LaunchMode</code></h3><blockquote>
+<p>任务栈：一种“先进后出”的栈结构，存放<code>Activity</code>实例。</p>
+</blockquote>
+<p>问：Activity有哪几种启动模式？</p>
+<p>（1）<code>standard</code>：标准模式，也是系统的默认模式，每次启动Activity都会重新创建一个新的实例，不管这个实例是否已经存在。</p>
+<p>（2）<code>singleTop</code>：栈顶复用模式，如果新的<code>Activity</code>位于任务栈的栈顶，那么此<code>Activity</code>不会被重新创建，同时它的<code>onNewIntent</code>方法会回调。</p>
+<p>（3）<code>singleTask</code>：栈内复用模式。一种单实例模式，在这种模式下，只要<code>Activity</code>在一个栈中存在，那么多次启动此Activity都不会重新创建实例，和<code>singleTop</code>一样，系统也会回调<code>onNewIntent</code>。</p>
+<blockquote>
+<ul>
+<li>比如任务栈S1中有ABC，这个时候Activity D以<code>singleTask</code>模式请求启动，其所需的任务栈为S2，由于S2和D的实例都不存在，系统会先创建任务栈S2，然后再创建D的实例并将其入栈到S2。</li>
+<li>假设D所需的任务栈为S1，其他情况与上述一样，由于S1存在，所以系统会直接创建D 的实例并将其入栈到S1。</li>
+<li>如果D所需的任务栈为S1，并且当前任务栈S1的情况为ADBC，此时D不会被创建，系统会把D切换到栈顶并调用其<code>onNewIntent</code>方法，<code>singleTask</code>默认具有<code>clearTop</code>效果，导致栈内所有在D上面的Activity全部出栈，最终S1中的情况为AD。</li>
+</ul>
+</blockquote>
+<p>（4）<code>singleInstance</code>：单实例模式，一种加强的<code>singleTask</code>模式，除了<code>singTask</code>模式的所有特性外，还加强了一点，那就是具有此种模式的Activity只能单独地位于一个任务栈中。</p>
+<p>举个启动模式的小例子：</p>
+<p>假设目前有两个任务栈，前台任务栈情况为AB，而后台任务栈情况为CD，假设CD的启动模式均为<code>singleTask</code>。现在请求启动D，那么整个后台任务都会切换到前台，这个时候按下back键的后退列表为ABCD，如图1-3。如果请求启动D而不是启动C，后退列表为ABC，如图1-4。</p>
 <p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908220815.png"></p>
 <p>​                                                                                        图1-3</p>
 <p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200908220947.png"></p>
 <p>​                                                                                    图1-4</p>
-<p>在singleTask启动模式中，多次提到某个Activity所需的任务栈，什么是Activity所需的任务栈？</p>
-<p>参数TaskAffinity标识了一个Activity所需要的的任务栈的名字，默认情况下，此参数为应用的包名，可以自己指定，TaskAffinity属性主要和singleTask启动模式或者allowTaskReparenting属性配对使用，在其他情况下没有意义。</p>
-<p>任务栈分为前台任务栈和后台任务栈，后台任务栈中的Activity处于暂停状态。</p>
-<p>当TaskAffinity和singleTask启动模式配对使用时，它是具有该模式的Activity的目前任务栈的名字，带启动的Activity会运行在名字和TaskAffinity相同的任务栈中。</p>
-<p>当TaskAffinity和allowTaskReparenting结合的时候，当一个应用A启动应用B 的某个Activity后，这个Activity的allowTaskReparenting属性为true的话，那么当应用B被启动后，此Activity会直接从应用A的任务栈转移到应用B的任务栈中。</p>
-<h3 id="1-2-2-Activity的Flags"><a href="#1-2-2-Activity的Flags" class="headerlink" title="1.2.2 Activity的Flags"></a>1.2.2 Activity的Flags</h3><p>Activity常用的标记位：</p>
+<p>问：在<code>singleTask</code>启动模式中，多次提到某个<code>Activity</code>所需的任务栈，什么是<code>Activity</code>所需的任务栈？</p>
+<blockquote>
+<p>参数<code>TaskAffinity</code>标识了一个<code>Activity</code>所需要的的任务栈的名字，默认情况下，此参数为应用的包名，可以自己指定，<code>TaskAffinity</code>属性主要和<code>singleTask</code>启动模式或者<code>allowTaskReparenting</code>属性配对使用，在其他情况下没有意义。</p>
+</blockquote>
+<p>任务栈分为前台任务栈和后台任务栈，后台任务栈中的<code>Activity</code>处于暂停状态。</p>
+<blockquote>
+<p>当<code>TaskAffinity</code>和<code>singleTask</code>启动模式配对使用时，它是具有该模式的Activity的目前任务栈的名字，带启动的Activity会运行在名字和<code>TaskAffinity</code>相同的任务栈中。</p>
+</blockquote>
+<blockquote>
+<p>当<code>TaskAffinity</code>和<code>allowTaskReparenting</code>结合的时候，当一个应用A启动应用B 的某个<code>Activity</code>后，这个<code>Activity</code>的<code>allowTaskReparenting</code>属性为true的话，那么当应用B被启动后，此<code>Activity</code>会直接从应用A的任务栈转移到应用B的任务栈中。</p>
+</blockquote>
+<h3 id="1-2-2-Activity的Flags"><a href="#1-2-2-Activity的Flags" class="headerlink" title="1.2.2 Activity的Flags"></a>1.2.2 <code>Activity</code>的Flags</h3><p><code>Activity</code>常用的标记位：</p>
+<blockquote>
 <ul>
-<li><p><strong>FLAG_ACTIVITY_NEW_TASK</strong> ：为Activity指定“singleTask”启动模式。</p>
+<li><p><strong><code>FLAG_ACTIVITY_NEW_TASK</code></strong> ：为Activity指定“<code>singleTask</code>”启动模式。</p>
 </li>
-<li><p><strong>FLAG_ACTIVITY_SINGLE_TOP</strong>：为Activity指定“singleTop”启动模式。</p>
+<li><p>**<code>FLAG_ACTIVITY_SINGLE_TOP</code>**：为Activity指定“<code>singleTop</code>”启动模式。</p>
 </li>
-<li><p><strong>FLAG_ACTIVITY_CLEAR_TOP</strong>：具有此标记位的Activity，当它启动时，在同一任务栈所有位于它上面的Activity都要出栈，此标记一般会与singleTask一起出现。</p>
+<li><p>**<code>FLAG_ACTIVITY_CLEAR_TOP</code>**：具有此标记位的<code>Activity</code>，当它启动时，在同一任务栈所有位于它上面的Activity都要出栈，此标记一般会与<code>singleTask</code>一起出现。</p>
 </li>
-<li><p><strong>FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS</strong>：具有此标记的Activity不会出现在历史Activity的列表中，等同<code> android:excludeFromRecents = &quot;true&quot;</code>。</p>
+<li><p>**<code>FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS</code>**：具有此标记的<code>Activity</code>不会出现在历史<code>Activity</code>的列表中，等同<code> android:excludeFromRecents = &quot;true&quot;</code>。</p>
 </li>
 </ul>
-<h2 id="1-3IntentFilter的匹配规则"><a href="#1-3IntentFilter的匹配规则" class="headerlink" title="1.3IntentFilter的匹配规则"></a>1.3IntentFilter的匹配规则</h2><p>启动Activity分为两种，显示调用和隐式调用。显示调用需要明确指定被启动对象的组件信息，包括包名和类名，而隐式调用则不需要明确指定组件信息。</p>
-<p>隐式调用：Intent 能够匹配目标组件中的action、category、data 这三个过滤信息，只有一个Intent能同时匹配这三种过滤信息才算完全匹配。</p>
+</blockquote>
+<h2 id="1-3-IntentFilter的匹配规则"><a href="#1-3-IntentFilter的匹配规则" class="headerlink" title="1.3 IntentFilter的匹配规则"></a>1.3 <code>IntentFilter</code>的匹配规则</h2><p>启动<code>Activity</code>分为两种，显示调用和隐式调用。显示调用需要明确指定被启动对象的组件信息，包括包名和类名，而隐式调用则不需要明确指定组件信息。</p>
+<blockquote>
+<p>隐式调用：<code>Intent</code> 能够匹配目标组件中的<code>action</code>、<code>category</code>、<code>data</code> 这三个过滤信息，只有一个Intent能同时匹配这三种过滤信息才算完全匹配。</p>
+</blockquote>
 <ul>
-<li><p>只有一个intent同时匹配 action、category、 data 才算完全匹配，只有 <strong>完全匹配</strong> 才能启动activity。</p>
+<li><p>只有一个<code>intent</code>同时匹配 <code>action</code>、<code>category</code>、 <code>data</code> 才算完全匹配，只有 <strong>完全匹配</strong> 才能启动<code>activity</code>。</p>
 </li>
-<li><p>一个 activity 可以 <strong>有多个</strong> intent-filter ，一个 intent <strong>只要成功匹配任意一组</strong>intent-filter 就可以启动activity。</p>
-<p><strong>A.action的匹配规则</strong></p>
+<li><p>一个 <code>activity</code> 可以 <strong>有多个</strong> <code>intent-filter</code> ，一个 <code>intent</code> <strong>只要成功匹配任意一组</strong><code>intent-filter</code> 就可以启动<code>activity</code>。</p>
+<p><strong>A. <code>action</code>的匹配规则</strong></p>
 </li>
-<li><p>action的匹配要求Intent中的action <strong>存在</strong>且必须和过滤规则中的其中action <strong>相同</strong>。</p>
+<li><p><code>action</code>的匹配要求<code>Intent</code>中的<code>action</code> <strong>存在</strong>且必须和过滤规则中的其中<code>action</code> <strong>相同</strong>。</p>
 </li>
-<li><p>action 是区分大小写的。</p>
+<li><p><code>action</code> 是区分大小写的。</p>
 </li>
 </ul>
-<p><strong>B.category的匹配规则</strong></p>
+<p><strong>B. <code>category</code>的匹配规则</strong></p>
 <ul>
-<li><p>ntent中的 category 只要有一个和 匹配规则中的category 相同就可以匹配。</p>
+<li><p><code>ntent</code>中的 <code>category</code> 只要有一个和 匹配规则中的<code>category</code> 相同就可以匹配。</p>
 </li>
-<li><p>intent 不设置 category ，也可以和其匹配，因为系统在调用 startActivity 或者 startActivity ForResult的时候会自动添加 android.intent.category.DEFAULT 这个category。</p>
+<li><p><code>intent</code> 不设置 <code>category</code> ，也可以和其匹配，因为系统在调用 <code>startActivity</code> 或者 <code>startActivity ForResult</code>的时候会自动添加 <code>android.intent.category.DEFAULT</code> 这个<code>category</code>。</p>
 </li>
 </ul>
-<p><strong>C.data的匹配规则</strong></p>
+<p><strong>C. <code>data</code>的匹配规则</strong></p>
 <ul>
-<li><p>类似于action。</p>
+<li><p>类似于<code>action</code>。</p>
 </li>
-<li><p>如果过滤规则中有data，那么intent中也必须定义可匹配的data。</p>
+<li><p>如果过滤规则中有<code>data</code>，那么<code>intent</code>中也必须定义可匹配的<code>data</code>。</p>
 </li>
-<li><p>data由 两部分组成：mimeType 和Url。</p>
-<p>说明：Url默认值为 content和 file。如果Intent指定完整的data，必须调用setDataAndType方法。</p>
+<li><p><code>data</code>由 两部分组成：<code>mimeType</code> 和<code>Url</code>。</p>
+<p>说明：<code>Url</code>默认值为 <code>content</code>和 <code>file</code>。如果<code>Intent</code>指定完整的<code>data</code>，必须调用<code>setDataAndType</code>方法。</p>
 </li>
 </ul>
-<h2 id="1-4-问题扩展"><a href="#1-4-问题扩展" class="headerlink" title="1.4 问题扩展"></a>1.4 问题扩展</h2><p>1.onStart和onResume、onPause和onStop 从描述上差不多，对我们来说有什么实质上的不同?</p>
-<p>答：onStart和onResume是从Activity是否可见的角度来回调的，onPause和onStop是从Activity是否在前台来回调的。</p>
-<p>2.假设当前Activity为A，如果这时用户打开一个新ActivityB，那么B的onResume和A 的onPause哪个先执行？</p>
-<p>答：A的onPause先执行。</p>
+<h2 id="1-4-问题扩展"><a href="#1-4-问题扩展" class="headerlink" title="1.4 问题扩展"></a>1.4 问题扩展</h2><p>1.<code>onStart</code>和<code>onResume</code>、<code>onPause</code>和<code>onStop</code> 从描述上差不多，对我们来说有什么实质上的不同?</p>
+<blockquote>
+<p><code>onStart</code>和<code>onResume</code>是从Activity是否可见的角度来回调的，<code>onPause</code>和<code>onStop</code>是从Activity是否在前台来回调的。</p>
+</blockquote>
+<p>2.假设当前Activity为A，如果这时用户打开一个新<code>Activity</code>B，那么B的<code>onResume</code>和A 的<code>onPause</code>哪个先执行？</p>
+<blockquote>
+<p>A的<code>onPause</code>先执行。</p>
+</blockquote>
 <p>3.当系统配置发生变化时，Activity会被重新创建，有什么办法能够不重新创建？</p>
-<p>答：可以给Activity指定configChanges属性。例如不想让Activity旋转时重新创建，可以给configChanges属性添加orientation这个值。</p>
-<p><code> android:configChanges=&quot;orientation&quot;</code></p>
+<blockquote>
+<p>可以给Activity指定<code>configChanges</code>属性。例如不想让Activity旋转时重新创建，可以给<code>configChanges</code>属性添加orientation这个值。<code> android:configChanges=&quot;orientation&quot;</code></p>
+</blockquote>
 <p>本文参考：</p>
-<p>​    《Android开发艺术探索》</p>
-<p>​    <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/95d0ae20d800">IntentFilter的匹配规则</a></p>
+<ul>
+<li>《Android开发艺术探索》</li>
+<li>​    <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/95d0ae20d800">IntentFilter的匹配规则</a></li>
+</ul>
 
     </div>
 
@@ -383,7 +437,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%B8%85%E5%8D%95%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">学习清单：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%85%A8%E9%9D%A2%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">1.1Activity的生命周期全面分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1%E5%85%B8%E5%9E%8B%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">1.1.1典型情况下的生命周期分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%88%86%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">1.1.2 异常情况下的生命周期分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">1.2Activity的启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Activity-%E7%9A%84LaunchMode"><span class="nav-number">3.1.</span> <span class="nav-text">1.2.1 Activity 的LaunchMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-Activity%E7%9A%84Flags"><span class="nav-number">3.2.</span> <span class="nav-text">1.2.2 Activity的Flags</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3IntentFilter%E7%9A%84%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99"><span class="nav-number">4.</span> <span class="nav-text">1.3IntentFilter的匹配规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E9%97%AE%E9%A2%98%E6%89%A9%E5%B1%95"><span class="nav-number">5.</span> <span class="nav-text">1.4 问题扩展</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">一、Activity的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%85%B8%E5%9E%8B%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 典型情况下的生命周期分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-Activity%E5%B8%B8%E7%94%A8%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1.2 Activity常用的生命周期</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%88%86%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 异常情况下的生命周期分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-%E8%B5%84%E6%BA%90%E7%9B%B8%E5%85%B3%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E5%8F%91%E7%94%9F%E6%94%B9%E5%8F%98%E5%AF%BC%E8%87%B4Activity%E8%A2%AB%E6%9D%80%E6%AD%BB%E5%B9%B6%E9%87%8D%E6%96%B0%E5%88%9B%E5%BB%BA"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.2.1 资源相关的系统配置发生改变导致Activity被杀死并重新创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2%E8%B5%84%E6%BA%90%E5%86%85%E5%AD%98%E4%B8%8D%E8%B6%B3%E5%AF%BC%E8%87%B4%E4%BC%98%E5%85%88%E7%BA%A7%E4%BD%8E%E7%9A%84Activity%E8%A2%AB%E6%9D%80%E6%AD%BB"><span class="nav-number">2.2.2.</span> <span class="nav-text">1.1.2资源内存不足导致优先级低的Activity被杀死</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">1.2 Activity的启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Activity-%E7%9A%84LaunchMode"><span class="nav-number">3.1.</span> <span class="nav-text">1.2.1 Activity 的LaunchMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-Activity%E7%9A%84Flags"><span class="nav-number">3.2.</span> <span class="nav-text">1.2.2 Activity的Flags</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-IntentFilter%E7%9A%84%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99"><span class="nav-number">4.</span> <span class="nav-text">1.3 IntentFilter的匹配规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E9%97%AE%E9%A2%98%E6%89%A9%E5%B1%95"><span class="nav-number">5.</span> <span class="nav-text">1.4 问题扩展</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -399,7 +453,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
