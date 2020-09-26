@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第一次个人编程项目   课程 软件工程    要求 个人项目作业   题目 论文查重     github链接  一、题目要求设计一个论文查重算法，给出一个原文文件和一个在这份原文上经过了增删改的抄袭版论文的文件，在答案文件中输出其重复率。  原文示例：今天是星期天，天气晴，今天晚上我要去看电影。 抄袭版示例：今天是周天，天气晴朗，我晚上要去看电影。  要求输入输出采用文件输入输出，规范如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yuki-r Blog">
+<meta property="og:url" content="http://example.com/2020/09/24/%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%B8%AA%E4%BA%BA%E7%BC%96%E7%A8%8B%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="Yuki-r Blog">
+<meta property="og:description" content="第一次个人编程项目   课程 软件工程    要求 个人项目作业   题目 论文查重     github链接  一、题目要求设计一个论文查重算法，给出一个原文文件和一个在这份原文上经过了增删改的抄袭版论文的文件，在答案文件中输出其重复率。  原文示例：今天是星期天，天气晴，今天晚上我要去看电影。 抄袭版示例：今天是周天，天气晴朗，我晚上要去看电影。  要求输入输出采用文件输入输出，规范如下：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924195714.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924231757.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924231706.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924231444.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924232859.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924212259.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924232726.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924212520.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924232209.png">
+<meta property="article:published_time" content="2020-09-24T15:22:41.805Z">
+<meta property="article:modified_time" content="2020-09-24T15:49:04.115Z">
+<meta property="article:author" content="Yuki">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924195714.png">
+
+<link rel="canonical" href="http://example.com/2020/09/24/%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%B8%AA%E4%BA%BA%E7%BC%96%E7%A8%8B%E9%A1%B9%E7%9B%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Yuki-r Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yuki-r Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%B8%AA%E4%BA%BA%E7%BC%96%E7%A8%8B%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/suoda.jpg">
+      <meta itemprop="name" content="Yuki">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuki-r Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-24 23:22:41 / 修改时间：23:49:04" itemprop="dateCreated datePublished" datetime="2020-09-24T23:22:41+08:00">2020-09-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="第一次个人编程项目"><a href="#第一次个人编程项目" class="headerlink" title="第一次个人编程项目"></a>第一次个人编程项目</h1><table>
+<thead>
+<tr>
+<th>课程</th>
+<th><a target="_blank" rel="noopener" href="https://edu.cnblogs.com/campus/gdgy/informationsecurity1812/">软件工程</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>要求</td>
+<td><a target="_blank" rel="noopener" href="https://edu.cnblogs.com/campus/gdgy/informationsecurity1812/homework/11155">个人项目作业</a></td>
+</tr>
+<tr>
+<td>题目</td>
+<td>论文查重</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p> <a target="_blank" rel="noopener" href="https://github.com/Yuki-r/DuplicateChecking">github链接</a></p>
+</blockquote>
+<h2 id="一、题目要求"><a href="#一、题目要求" class="headerlink" title="一、题目要求"></a>一、题目要求</h2><p>设计一个论文查重算法，给出一个原文文件和一个在这份原文上经过了增删改的抄袭版论文的文件，在答案文件中输出其重复率。</p>
+<ul>
+<li>原文示例：今天是星期天，天气晴，今天晚上我要去看电影。</li>
+<li>抄袭版示例：今天是周天，天气晴朗，我晚上要去看电影。</li>
+</ul>
+<p>要求输入输出采用文件输入输出，规范如下：</p>
+<ul>
+<li>从<strong>命令行参数</strong>给出：论文原文的文件的<strong>绝对路径</strong>。</li>
+<li>从<strong>命令行参数</strong>给出：抄袭版论文的文件的<strong>绝对路径</strong>。</li>
+<li>从<strong>命令行参数</strong>给出：输出的答案文件的<strong>绝对路径</strong>。</li>
+</ul>
+<h2 id="二、项目实现"><a href="#二、项目实现" class="headerlink" title="二、项目实现"></a>二、项目实现</h2><ul>
+<li>实现思路:</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924195714.png"></p>
+<ul>
+<li>关键类：</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924231757.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;算词频</span><br><span class="line">for (String s : JieBaUtil.startParticiple(str1)) &#123;</span><br><span class="line">           if (vectorMap.containsKey(s)) &#123;</span><br><span class="line">               vectorMap.get(s)[0]++;</span><br><span class="line">           &#125; else &#123;</span><br><span class="line">               tempArray &#x3D; new int[2];</span><br><span class="line">               tempArray[0] &#x3D; 1;</span><br><span class="line">               tempArray[1] &#x3D; 0;</span><br><span class="line">               vectorMap.put(s, tempArray);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       for (String s2 : JieBaUtil.startParticiple(str2)) &#123;</span><br><span class="line">           if (vectorMap.containsKey(s2)) &#123;</span><br><span class="line">               vectorMap.get(s2)[1]++;</span><br><span class="line">           &#125; else &#123;</span><br><span class="line">               tempArray &#x3D; new int[2];</span><br><span class="line">               tempArray[0] &#x3D; 0;</span><br><span class="line">               tempArray[1] &#x3D; 1;</span><br><span class="line">               vectorMap.put(s2, tempArray);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>核心算法：余弦相似度计算。</p>
+<blockquote>
+<p>步骤</p>
+<ol>
+<li><p>分词</p>
+</li>
+<li><p>列出所有词</p>
+</li>
+<li><p>使用Map记录词数</p>
+</li>
+<li><p>代入公式</p>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924231706.png"></p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h1 id="三、性能"><a href="#三、性能" class="headerlink" title="三、性能"></a>三、性能</h1><ul>
+<li>测试覆盖率截图</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924231444.png"></p>
+<ul>
+<li>单元测试</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924232859.png"></p>
+<ul>
+<li>类的内存消耗</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924212259.png"></p>
+<ul>
+<li>CPU Load</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924232726.png"></p>
+<ul>
+<li>堆内存</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924212520.png"></p>
+<ul>
+<li>我的 <a target="_blank" rel="noopener" href="https://github.com/Yuki-r/DuplicateChecking">github</a></li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20200924232209.png"></p>
+<h1 id="四、PSP表格"><a href="#四、PSP表格" class="headerlink" title="四、PSP表格"></a>四、PSP表格</h1><table>
+<thead>
+<tr>
+<th>PSP</th>
+<th>Personal Software Process Stages</th>
+<th>预估耗时（分钟）</th>
+<th>实际耗时（分钟）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Planning</td>
+<td>计划</td>
+<td>30</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Estimate</td>
+<td>估计这个任务需要多少时间</td>
+<td>715</td>
+<td>930</td>
+</tr>
+<tr>
+<td>Development</td>
+<td>开发</td>
+<td>200</td>
+<td>300</td>
+</tr>
+<tr>
+<td>Analysis</td>
+<td>需求分析 (包括学习新技术)</td>
+<td>60</td>
+<td>90</td>
+</tr>
+<tr>
+<td>Design Spec</td>
+<td>生成设计文档</td>
+<td>30</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Design Review</td>
+<td>设计复审</td>
+<td>50</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Coding Standard</td>
+<td>代码规范 (为目前的开发制定合适的规范)</td>
+<td>10</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Design</td>
+<td>具体设计</td>
+<td>35</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Coding</td>
+<td>具体编码</td>
+<td>200</td>
+<td>250</td>
+</tr>
+<tr>
+<td>Code Review</td>
+<td>代码复审</td>
+<td>20</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>测试（自我测试，修改代码，提交修改）</td>
+<td>10</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Reporting</td>
+<td>报告</td>
+<td>40</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Test Repor</td>
+<td>测试报告</td>
+<td>10</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Size Measurement</td>
+<td>计算工作量</td>
+<td>20</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Postmortem &amp; Process Improvement Plan</td>
+<td>事后总结, 并提出过程改进计划</td>
+<td>5</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>合计</td>
+<td>715</td>
+<td>930</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/14/View%E4%BD%93%E7%B3%BB/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%B8%AA%E4%BA%BA%E7%BC%96%E7%A8%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">第一次个人编程项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%A2%98%E7%9B%AE%E8%A6%81%E6%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">一、题目要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%A1%B9%E7%9B%AE%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">二、项目实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%A7%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">三、性能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81PSP%E8%A1%A8%E6%A0%BC"><span class="nav-number">3.</span> <span class="nav-text">四、PSP表格</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yuki"
+      src="/images/suoda.jpg">
+  <p class="site-author-name" itemprop="name">Yuki</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yuki-r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yuki-r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yuki</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
