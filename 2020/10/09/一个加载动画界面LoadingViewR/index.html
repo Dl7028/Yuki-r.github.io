@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言 github地址  预览效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个加载动画界面LoadingViewR">
+<meta property="og:url" content="http://example.com/2020/10/09/%E4%B8%80%E4%B8%AA%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E7%95%8C%E9%9D%A2LoadingViewR/index.html">
+<meta property="og:site_name" content="Yuki-r Blog">
+<meta property="og:description" content="前言 github地址  预览效果">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5deeb5be9076ce814d82ab8c81d0a22d.png">
+<meta property="article:published_time" content="2020-10-09T09:30:41.000Z">
+<meta property="article:modified_time" content="2020-10-09T09:31:14.754Z">
+<meta property="article:author" content="Yuki">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/5deeb5be9076ce814d82ab8c81d0a22d.png">
+
+<link rel="canonical" href="http://example.com/2020/10/09/%E4%B8%80%E4%B8%AA%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E7%95%8C%E9%9D%A2LoadingViewR/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>一个加载动画界面LoadingViewR | Yuki-r Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yuki-r Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/09/%E4%B8%80%E4%B8%AA%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E7%95%8C%E9%9D%A2LoadingViewR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/suoda.jpg">
+      <meta itemprop="name" content="Yuki">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuki-r Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一个加载动画界面LoadingViewR
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-09 17:30:41 / 修改时间：17:31:14" itemprop="dateCreated datePublished" datetime="2020-10-09T17:30:41+08:00">2020-10-09</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/Yuki-r/LoadingView-R">github地址</a></p>
+</blockquote>
+<h2 id="预览效果"><a href="#预览效果" class="headerlink" title="预览效果"></a>预览效果</h2><p><img src="https://img-blog.csdnimg.cn/img_convert/5deeb5be9076ce814d82ab8c81d0a22d.png"></p>
+<a id="more"></a>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="一、添加依赖"><a href="#一、添加依赖" class="headerlink" title="一、添加依赖"></a>一、添加依赖</h3><blockquote>
+<p>有两种方法：<code>Gradle</code>和<code>Maven</code></p>
+</blockquote>
+<p>1.<code>Gradle</code></p>
+<p>在项目的<code>gradle.build</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">	repositories &#123;</span><br><span class="line">		...</span><br><span class="line">		maven &#123; url &#39;https:&#x2F;&#x2F;jitpack.io&#39; &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>添加依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">	        implementation &#39;com.github.Yuki-r:LoadingView-R:1.0.1&#39;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.使用<code>Maven</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;repositories&gt;</span><br><span class="line">		&lt;repository&gt;</span><br><span class="line">		    &lt;id&gt;jitpack.io&lt;&#x2F;id&gt;</span><br><span class="line">		    &lt;url&gt;https:&#x2F;&#x2F;jitpack.io&lt;&#x2F;url&gt;</span><br><span class="line">		&lt;&#x2F;repository&gt;</span><br><span class="line">	&lt;&#x2F;repositories&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	    &lt;groupId&gt;com.github.Yuki-r&lt;&#x2F;groupId&gt;</span><br><span class="line">	    &lt;artifactId&gt;LoadingView-R&lt;&#x2F;artifactId&gt;</span><br><span class="line">	    &lt;version&gt;1.0.1&lt;&#x2F;version&gt;</span><br><span class="line">	&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、在布局文件中引用"><a href="#二、在布局文件中引用" class="headerlink" title="二、在布局文件中引用"></a>二、在布局文件中引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;com.loadingview_r.loadingviewr.LoadingViewR</span><br><span class="line">       android:id&#x3D;&quot;@+id&#x2F;loadingView&quot;</span><br><span class="line">       android:layout_width&#x3D;&quot;0dp&quot;</span><br><span class="line">       android:layout_height&#x3D;&quot;0dp&quot;</span><br><span class="line">       app:layout_constraintBottom_toBottomOf&#x3D;&quot;parent&quot;</span><br><span class="line">       app:layout_constraintEnd_toEndOf&#x3D;&quot;parent&quot;</span><br><span class="line">       app:layout_constraintStart_toStartOf&#x3D;&quot;parent&quot;</span><br><span class="line">       app:layout_constraintTop_toBottomOf&#x3D;&quot;@+id&#x2F;textView&quot;</span><br><span class="line">       &lt;!--界面设置，不设置则使用默认值--&gt;</span><br><span class="line">       app:lineNumber&#x3D;&quot;3&quot;       &#x2F;&#x2F;设置方块行数</span><br><span class="line">       app:fixBlock_Angle&#x3D;&quot;5&quot;   &#x2F;&#x2F;设置固定方块的角度</span><br><span class="line">       app:moveBlock_Angle&#x3D;&quot;20&quot; &#x2F;&#x2F;设置移动方块的角度</span><br><span class="line"></span><br><span class="line">       app:blockInterval&#x3D;&quot;8dp&quot;  &#x2F;&#x2F;方块间隔</span><br><span class="line">       app:half_BlockWidth&#x3D;&quot;15dp&quot; &#x2F;&#x2F;方块大小</span><br><span class="line">       app:initPosition&#x3D;&quot;0&quot;  &#x2F;&#x2F;移动方块的初始位置</span><br><span class="line"></span><br><span class="line">       app:isClock_Wise&#x3D;&quot;false&quot; &#x2F;&#x2F;ture顺时针旋转，false逆时针旋转</span><br><span class="line">       app:moveSpeed&#x3D;&quot;500&quot; &#x2F;&#x2F;移动速度</span><br><span class="line">       &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、在代码中引用"><a href="#三、在代码中引用" class="headerlink" title="三、在代码中引用"></a>三、在代码中引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private LoadingViewR loadingViewR;</span><br><span class="line">...</span><br><span class="line">loadingViewR &#x3D; findViewById(R.id.LoadingView_r);</span><br><span class="line"> loadingViewR.startMoving(); &#x2F;&#x2F;启动</span><br><span class="line"> loadingViewR.stopMoving(); &#x2F;&#x2F;停止</span><br></pre></td></tr></table></figure>
+
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><blockquote>
+<p>如果此文对你有帮助，欢迎收藏点赞！</p>
+</blockquote>
+<hr>
+<p>参考自：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/carson_ho/article/details/77712072">你也可以自己写一个可爱 &amp; 小资风格的Android加载等待自定义View</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/27/View%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" rel="prev" title="View的工作原理">
+      <i class="fa fa-chevron-left"></i> View的工作原理
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E8%A7%88%E6%95%88%E6%9E%9C"><span class="nav-number">2.</span> <span class="nav-text">预览效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="nav-number">3.1.</span> <span class="nav-text">一、添加依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%9C%A8%E5%B8%83%E5%B1%80%E6%96%87%E4%BB%B6%E4%B8%AD%E5%BC%95%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">二、在布局文件中引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%9C%A8%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%BC%95%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">三、在代码中引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">3.4.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yuki"
+      src="/images/suoda.jpg">
+  <p class="site-author-name" itemprop="name">Yuki</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yuki-r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yuki-r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yuki</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
