@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="动画一、View动画 View动画包括：补间动画、逐帧动画。   1.1 补间动画 作用对象：View 动画效果：平移、缩放、旋转、透明度     名称 子类 效果    平移动画 TranslateAnimation 移动View   缩放动画 ScaleAnimation 放大&#x2F;缩小View   旋转动画 RotateAnimation 旋转View   透明度动画 AlphaAnimatio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="‘动画深入浅析">
+<meta property="og:url" content="http://example.com/2020/10/10/%E5%8A%A8%E7%94%BB%E6%B7%B1%E5%85%A5%E6%B5%85%E6%9E%90/index.html">
+<meta property="og:site_name" content="Yuki-r Blog">
+<meta property="og:description" content="动画一、View动画 View动画包括：补间动画、逐帧动画。   1.1 补间动画 作用对象：View 动画效果：平移、缩放、旋转、透明度     名称 子类 效果    平移动画 TranslateAnimation 移动View   缩放动画 ScaleAnimation 放大&#x2F;缩小View   旋转动画 RotateAnimation 旋转View   透明度动画 AlphaAnimatio">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011104526.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011111732.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2011-23-52.gif">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2012-09-05.gif">
+<meta property="article:published_time" content="2020-10-10T13:46:21.000Z">
+<meta property="article:modified_time" content="2020-10-11T04:15:40.693Z">
+<meta property="article:author" content="Yuki">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011104526.png">
+
+<link rel="canonical" href="http://example.com/2020/10/10/%E5%8A%A8%E7%94%BB%E6%B7%B1%E5%85%A5%E6%B5%85%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>‘动画深入浅析 | Yuki-r Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yuki-r Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/10/%E5%8A%A8%E7%94%BB%E6%B7%B1%E5%85%A5%E6%B5%85%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/suoda.jpg">
+      <meta itemprop="name" content="Yuki">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuki-r Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ‘动画深入浅析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-10 21:46:21" itemprop="dateCreated datePublished" datetime="2020-10-10T21:46:21+08:00">2020-10-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-11 12:15:40" itemprop="dateModified" datetime="2020-10-11T12:15:40+08:00">2020-10-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h1><h2 id="一、View动画"><a href="#一、View动画" class="headerlink" title="一、View动画"></a>一、View动画</h2><blockquote>
+<p>View动画包括：补间动画、逐帧动画。</p>
+</blockquote>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011104526.png"></p>
+<h3 id="1-1-补间动画"><a href="#1-1-补间动画" class="headerlink" title="1.1 补间动画"></a>1.1 补间动画</h3><blockquote>
+<p>作用对象：View</p>
+<p>动画效果：平移、缩放、旋转、透明度</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">子类</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">平移动画<translate></td>
+<td align="center">TranslateAnimation</td>
+<td align="center">移动View</td>
+</tr>
+<tr>
+<td align="center">缩放动画<scale></td>
+<td align="center">ScaleAnimation</td>
+<td align="center">放大/缩小View</td>
+</tr>
+<tr>
+<td align="center">旋转动画<rotate></td>
+<td align="center">RotateAnimation</td>
+<td align="center">旋转View</td>
+</tr>
+<tr>
+<td align="center">透明度动画<alpha></td>
+<td align="center">AlphaAnimation</td>
+<td align="center">改变View的透明度</td>
+</tr>
+</tbody></table>
+<h4 id="1-1-1-单个动画使用"><a href="#1-1-1-单个动画使用" class="headerlink" title="1.1.1 单个动画使用"></a>1.1.1 单个动画使用</h4><blockquote>
+<p>在XML/Java代码中设置，在XML中设置，动画描述的可读性更好。在Java代码中设置，动画效果可动态创建。</p>
+<p>以平移动画为例；</p>
+</blockquote>
+<h5 id="XML设置法"><a href="#XML设置法" class="headerlink" title="XML设置法"></a>XML设置法</h5><ul>
+<li>步骤1：xml设置</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011111732.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;translate xmlns:android&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;</span><br><span class="line">    android:duration&#x3D;&quot;3000&quot; &#x2F;&#x2F;动画持续时间</span><br><span class="line">    android:startOffset &#x3D;&quot;1000&quot;&#x2F;&#x2F; 动画延迟开始时间（ms）</span><br><span class="line">    android:fillBefore &#x3D; &quot;true&quot;&#x2F;&#x2F; 动画播放完后，视图是否会停留在动画开始的状态，默认为true</span><br><span class="line">    android:fillAfter &#x3D; &quot;false&quot;&#x2F;&#x2F; 动画播放完后，视图是否会停留在动画结束的状态，优先于fillBefore值，默认为false</span><br><span class="line">    android:fillEnabled&#x3D; &quot;true&quot;&#x2F;&#x2F; 是否应用fillBefore值，对fillAfter值无影响，默认为true</span><br><span class="line">    android:repeatMode&#x3D;&quot;restart&quot;&#x2F;&#x2F; 选择重复播放动画模式，restart代表正序重放，reverse代表倒序回放，默认为restart</span><br><span class="line">    android:repeatCount &#x3D; &quot;0&quot;重放次数（所以动画的播放次数&#x3D;重放次数+1），为infinite时无限重复</span><br><span class="line"></span><br><span class="line">    android:fromXDelta&#x3D;&quot;0&quot;&#x2F;&#x2F; 视图在水平方向x 移动的起始值</span><br><span class="line">    android:toXDelta&#x3D;&quot;500&quot;&#x2F;&#x2F; 视图在水平方向x 移动的结束值</span><br><span class="line"></span><br><span class="line">    android:fromYDelta&#x3D;&quot;0&quot;&#x2F;&#x2F; 视图在竖直方向y 移动的起始值</span><br><span class="line">    android:toYDelta&#x3D;&quot;0&quot; &#x2F;&#x2F; 视图在竖直方向y 移动的结束值</span><br><span class="line">    &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>步骤2：java代码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">    Button button;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        button &#x3D; findViewById(R.id.button);</span><br><span class="line">        final Animation animation &#x3D; AnimationUtils.loadAnimation(this,R.anim.animation); &#x2F;&#x2F;创建动画对象，传入xml文件</span><br><span class="line">        button.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                button.startAnimation(animation); &#x2F;&#x2F;启动动画</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>效果图</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2011-23-52.gif" alt="动画效果图"></p>
+<h4 id="Java代码设置法"><a href="#Java代码设置法" class="headerlink" title="Java代码设置法"></a>Java代码设置法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Button mButton &#x3D; (Button) findViewById(R.id.Button);</span><br><span class="line">&#x2F;&#x2F; 步骤1:创建 需要设置动画的 视图View</span><br><span class="line"></span><br><span class="line">Animation translateAnimation &#x3D; new TranslateAnimation(0，500，0，0);</span><br><span class="line">&#x2F;&#x2F; 步骤2：创建平移动画的对象：平移动画对应的Animation子类为TranslateAnimation</span><br><span class="line">&#x2F;&#x2F; 参数分别是：</span><br><span class="line">&#x2F;&#x2F; 1. fromXDelta ：视图在水平方向x 移动的起始值</span><br><span class="line">&#x2F;&#x2F; 2. toXDelta ：视图在水平方向x 移动的结束值</span><br><span class="line">&#x2F;&#x2F; 3. fromYDelta ：视图在竖直方向y 移动的起始值</span><br><span class="line">&#x2F;&#x2F; 4. toYDelta：视图在竖直方向y 移动的结束值</span><br><span class="line"></span><br><span class="line">translateAnimation.setDuration(3000);</span><br><span class="line">&#x2F;&#x2F; 固定属性的设置都是在其属性前加“set”，如setDuration（）</span><br><span class="line">mButton.startAnimation(translateAnimation);</span><br><span class="line">&#x2F;&#x2F; 步骤3:播放动画</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>效果图跟上图一样。</p>
+</blockquote>
+<h4 id="1-1-2-组合动画使用"><a href="#1-1-2-组合动画使用" class="headerlink" title="1.1.2 组合动画使用"></a>1.1.2 组合动画使用</h4><ul>
+<li>步骤1：XML设置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;set xmlns:android&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;</span><br><span class="line"></span><br><span class="line">android:duration&#x3D;&quot;3000&quot;</span><br><span class="line">android:startOffset &#x3D;&quot;0&quot;</span><br><span class="line">android:fillBefore &#x3D; &quot;true&quot;</span><br><span class="line">android:fillAfter &#x3D; &quot;false&quot;</span><br><span class="line">android:fillEnabled&#x3D; &quot;true&quot;</span><br><span class="line">android:repeatMode&#x3D;&quot;restart&quot;</span><br><span class="line">android:repeatCount &#x3D; &quot;0&quot;</span><br><span class="line">android:interpolator &#x3D; &quot;@android:anim&#x2F;linear_interpolator&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;rotate  &#x2F;&#x2F;旋转动画</span><br><span class="line">    android:duration&#x3D;&quot;1000&quot;</span><br><span class="line">    android:fromDegrees&#x3D;&quot;0&quot;</span><br><span class="line">    android:toDegrees&#x3D;&quot;360&quot;</span><br><span class="line">    android:pivotX&#x3D;&quot;50%&quot;</span><br><span class="line">    android:pivotY&#x3D;&quot;50%&quot;</span><br><span class="line">    android:repeatMode&#x3D;&quot;restart&quot;</span><br><span class="line">    android:repeatCount&#x3D;&quot;infinite&quot;</span><br><span class="line">    &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;translate &#x2F;&#x2F;平移动画</span><br><span class="line">    android:duration&#x3D;&quot;10000&quot;</span><br><span class="line">    android:startOffset &#x3D;&quot;1000&quot;</span><br><span class="line">    android:fromXDelta&#x3D;&quot;-50%p&quot;</span><br><span class="line">    android:fromYDelta&#x3D;&quot;0&quot;</span><br><span class="line">    android:toXDelta&#x3D;&quot;50%p&quot;</span><br><span class="line">    android:toYDelta&#x3D;&quot;0&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;set&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>步骤2：Java代码设置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">    Button button;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        button &#x3D; findViewById(R.id.button);</span><br><span class="line">        final Animation animation &#x3D; AnimationUtils.loadAnimation(this,R.anim.group_animation); &#x2F;&#x2F;创建动画对象，传入xml文件</span><br><span class="line">        button.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                button.startAnimation(animation); &#x2F;&#x2F;启动动画</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>效果图</li>
+</ul>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2012-09-05.gif" alt="效果图"></p>
+<h2 id="二、属性动画"><a href="#二、属性动画" class="headerlink" title="二、属性动画"></a>二、属性动画</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/10/%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97/" rel="prev" title="四则运算">
+      <i class="fa fa-chevron-left"></i> 四则运算
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB"><span class="nav-number">1.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81View%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.</span> <span class="nav-text">一、View动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E8%A1%A5%E9%97%B4%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 补间动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E5%8D%95%E4%B8%AA%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1 单个动画使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#XML%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">XML设置法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E4%BB%A3%E7%A0%81%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">Java代码设置法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E7%BB%84%E5%90%88%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.2 组合动画使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.2.</span> <span class="nav-text">二、属性动画</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yuki"
+      src="/images/suoda.jpg">
+  <p class="site-author-name" itemprop="name">Yuki</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yuki-r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yuki-r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yuki</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
