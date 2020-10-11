@@ -28,12 +28,15 @@
 <meta property="og:description" content="动画">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011104526.png">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011203608.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011111732.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2011-23-52.gif">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2012-09-05.gif">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2017-46-16.gif">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011211411.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-0a9435149480729e.gif?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp">
 <meta property="article:published_time" content="2020-10-10T13:46:21.000Z">
-<meta property="article:modified_time" content="2020-10-11T10:00:07.141Z">
+<meta property="article:modified_time" content="2020-10-11T13:41:11.226Z">
 <meta property="article:author" content="Yuki">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011104526.png">
@@ -186,7 +189,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-11 18:00:07" itemprop="dateModified" datetime="2020-10-11T18:00:07+08:00">2020-10-11</time>
+                <time title="修改时间：2020-10-11 21:41:11" itemprop="dateModified" datetime="2020-10-11T21:41:11+08:00">2020-10-11</time>
               </span>
 
           
@@ -239,6 +242,75 @@
 <td align="center">改变View的透明度</td>
 </tr>
 </tbody></table>
+<h4 id="四种动画xml代码"><a href="#四种动画xml代码" class="headerlink" title="四种动画xml代码"></a>四种动画xml代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;set xmlns:android&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;</span><br><span class="line">        android:shareInterpolator&#x3D;&quot;true&quot;</span><br><span class="line">        android:interpolator &#x3D; &quot;@android:anim&#x2F;linear_interpolator&quot;&gt;</span><br><span class="line">    &lt;rotate     </span><br><span class="line">        android:fromDegrees&#x3D;&quot;float&quot;</span><br><span class="line">        android:toDegrees&#x3D;&quot;float&quot;</span><br><span class="line">        android:pivotX&#x3D;&quot;float&quot;</span><br><span class="line">        android:pivotY&#x3D;&quot;float&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;translate</span><br><span class="line">        android:fromXDelta&#x3D;&quot;float&quot;</span><br><span class="line">        android:fromYDelta&#x3D;&quot;float&quot;</span><br><span class="line">        android:toXDelta&#x3D;&quot;float&quot;</span><br><span class="line">        android:toYDelta&#x3D;&quot;float&quot; &#x2F;&gt;</span><br><span class="line">    &lt;alpha</span><br><span class="line">        android:fromAlpha&#x3D;&quot;float&quot;</span><br><span class="line">        android:toAlpha&#x3D;&quot;float&quot;&#x2F;&gt;</span><br><span class="line">    &lt;scale</span><br><span class="line">        android:fromXScale&#x3D;&quot;float&quot;</span><br><span class="line">        android:toXScale&#x3D;&quot;float&quot;</span><br><span class="line">        android:fromYScale&#x3D;&quot;float&quot;</span><br><span class="line">        android:toYScale&#x3D;&quot;float&quot;</span><br><span class="line">        android:pivotX&#x3D;&quot;float&quot;</span><br><span class="line">        android:pivotY&#x3D;&quot;float&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;set&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以下是对上面代码的说明。</p>
+</blockquote>
+<h5 id="1-set-表示动画集合，对应AnimationSet类"><a href="#1-set-表示动画集合，对应AnimationSet类" class="headerlink" title="1.set:表示动画集合，对应AnimationSet类"></a>1.<code>set</code>:表示动画集合，对应<code>AnimationSet</code>类</h5><ul>
+<li><code>interpolator</code>:表示动画集合所采用的插值器，影响动画的速度。可以不指定，默认是<code>accelerate_decelerate_interpolate</code>(加速减速插值器)。下文<code>属性动画</code>会详细介绍插值器的相关知识。</li>
+<li><code>shareInterpolator</code>:表示集合中的动画是否和<strong>集合</strong>共享一个插值器。如果集合不指定插值器, 那么子动画就需要单独制定所需的插值器或者使用默认值。</li>
+<li><code>fillAfter</code>：表示动画结束时是否保持动画结束时的状态</li>
+</ul>
+<h5 id="2-rotate：表示旋转动画，对应RotateAnimation类。"><a href="#2-rotate：表示旋转动画，对应RotateAnimation类。" class="headerlink" title="2.rotate：表示旋转动画，对应RotateAnimation类。"></a>2.<code>rotate</code>：表示旋转动画，对应<code>RotateAnimation</code>类。</h5><ul>
+<li><code>fromDegrees</code>：动画起始时物件的角度 (0度指X轴正方向所在方向)</li>
+<li><code>toDegrees</code>：动画结束时物件旋转的角度</li>
+</ul>
+<blockquote>
+<p>以上两个属性共同确定旋转方向，原则是：当角度(to-from)为<strong>负</strong>数时表示<strong>逆时针</strong>旋转，反之。</p>
+</blockquote>
+<ul>
+<li><code>pivotY</code>：动画旋转的轴点的X坐标</li>
+<li><code>pivotX</code>：动画旋转的轴点的Y坐标</li>
+</ul>
+<h5 id="3-translate：表示平移动画，对应TranslateAnimation类"><a href="#3-translate：表示平移动画，对应TranslateAnimation类" class="headerlink" title="3.translate：表示平移动画，对应TranslateAnimation类"></a>3.<code>translate</code>：表示平移动画，对应<code>TranslateAnimation</code>类</h5><ul>
+<li><code>android:fromXDelta</code>：动画起始时X坐标上的位置。</li>
+<li><code>android:toXDelta</code>：动画结束时X坐标上的位置。</li>
+<li><code>android:fromYDelta</code>：动画起始时Y坐标上的位置。</li>
+<li><code>android:toYDelta</code>：动画结束时Y坐标上的位置。</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：以上四个属性以及后面几个类似属性的取值可能是数值、百分数、百分数p，各自含义是：</p>
+<ul>
+<li><strong>50</strong>：以View左上角为原点沿坐标轴正方向偏移50px。</li>
+<li><strong>50%**：以View左上角为原点沿坐标轴正方向偏移</strong>View**宽/高度的50%。</li>
+<li><strong>50%p</strong>：以View左上角为原点沿坐标轴正方向偏移父（<strong>parent</strong>）控件宽/高度的50%。区别如图：</li>
+</ul>
+</blockquote>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011203608.png" alt="偏移属性"></p>
+<h5 id="4-alpha：表示透明度动画，对应AlphaAnimation类"><a href="#4-alpha：表示透明度动画，对应AlphaAnimation类" class="headerlink" title="4.alpha：表示透明度动画，对应AlphaAnimation类"></a>4.<code>alpha</code>：表示透明度动画，对应<code>AlphaAnimation</code>类</h5><ul>
+<li><code>fromAlpha</code>：动画起始时透明度</li>
+<li><code>toAlpha</code>：动画结束时透明度</li>
+</ul>
+<blockquote>
+<p>以上两个属性值：从0-1中取值。注意：</p>
+<ul>
+<li>值=0.0 ：表示完全透明</li>
+<li>值=1.0 ：表示完全不透明</li>
+</ul>
+</blockquote>
+<h5 id="5-scale：表示缩放动画，对应ScaleAnimation类"><a href="#5-scale：表示缩放动画，对应ScaleAnimation类" class="headerlink" title="5.scale：表示缩放动画，对应ScaleAnimation类"></a>5.<code>scale</code>：表示缩放动画，对应<code>ScaleAnimation</code>类</h5><ul>
+<li><code>fromXScale</code>：动画起始时X坐标上的伸缩尺寸</li>
+<li><code>toXScale</code>：动画结束时X坐标上的伸缩尺寸</li>
+<li><code>fromYScale</code>：动画起始时Y坐标上的伸缩尺寸</li>
+<li><code>toYScale</code>：属性为动画结束时Y坐标上的伸缩尺寸</li>
+</ul>
+<blockquote>
+<p>以上四个属性值的值含义：</p>
+<ul>
+<li>值=0.0 ：表示收缩到没有</li>
+<li>值＜1.0 ：表示收缩</li>
+<li>值=1.0 ：表示无伸缩</li>
+<li>值＞1.0 ：表示放大</li>
+</ul>
+</blockquote>
+<ul>
+<li><code>pivotX</code>：动画相对于物件的X坐标的开始位置</li>
+<li><code>pivotY</code>：动画相对于物件的Y坐标的开始位置</li>
+</ul>
+<blockquote>
+<p>以上两个属性值表示缩放的轴点：从0%-100%中取值。</p>
+</blockquote>
 <h4 id="1-1-1-单个动画使用"><a href="#1-1-1-单个动画使用" class="headerlink" title="1.1.1 单个动画使用"></a>1.1.1 单个动画使用</h4><blockquote>
 <p>在XML/Java代码中设置，在XML中设置，动画描述的可读性更好。在Java代码中设置，动画效果可动态创建。</p>
 <p>以平移动画为例；</p>
@@ -319,7 +391,7 @@
 <tbody><tr>
 <td>作用对象</td>
 <td align="left">View</td>
-<td>任意Java对象</td>
+<td>任何对象，甚至没有对象</td>
 </tr>
 <tr>
 <td>属性改变</td>
@@ -341,8 +413,11 @@
 <li>代码实现比较简单。</li>
 <li>属性的起始值有时候无法确定，需要动态地创建属性动画。</li>
 </ul>
+<p>下面是组合动画旋转+平移实例。</p>
 </blockquote>
-<ul>
+<h4 id="Java-设置"><a href="#Java-设置" class="headerlink" title="Java 设置"></a>Java 设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">button &#x3D; findViewById(R.id.button);</span><br><span class="line">       &#x2F;&#x2F; 步骤1：设置需要组合的动画效果</span><br><span class="line">       &#x2F;&#x2F; 平移动画</span><br><span class="line"></span><br><span class="line">       ObjectAnimator translation &#x3D; ObjectAnimator.ofFloat(button, &quot;translationX&quot;, 0, 300);</span><br><span class="line">       translation.setRepeatCount(0);</span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F; 旋转动画</span><br><span class="line">       ObjectAnimator rotate &#x3D; ObjectAnimator.ofFloat(button, &quot;rotation&quot;, 0f, 360f);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F; 步骤2：创建组合动画的对象</span><br><span class="line">       final AnimatorSet animSet &#x3D; new AnimatorSet();</span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F; 步骤3：根据需求组合动画</span><br><span class="line">       animSet.play(translation).with(rotate);</span><br><span class="line">       &#x2F;&#x2F; 步骤4：启动动画</span><br><span class="line">	animSet.start(); </span><br></pre></td></tr></table></figure>
+
+<h4 id="XML设置"><a href="#XML设置" class="headerlink" title="XML设置"></a>XML设置</h4><ul>
 <li>步骤1：XML设置</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;set xmlns:android&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;</span><br><span class="line">    android:ordering&#x3D;&quot;sequentially&quot; &gt;</span><br><span class="line">    &#x2F;&#x2F; 表示Set集合内的动画按顺序进行</span><br><span class="line">    &#x2F;&#x2F; ordering的属性值:sequentially &amp; together</span><br><span class="line">    &#x2F;&#x2F; sequentially:表示set中的动画，按照先后顺序逐步进行（a 完成之后进行 b ）</span><br><span class="line">    &#x2F;&#x2F; together:表示set中的动画，在同一时间同时进行,为默认值</span><br><span class="line"></span><br><span class="line">    &lt;set android:ordering&#x3D;&quot;together&quot; &gt;</span><br><span class="line">        &#x2F;&#x2F; 下面的动画同时进行</span><br><span class="line">        &lt;objectAnimator</span><br><span class="line">            android:duration&#x3D;&quot;2000&quot;</span><br><span class="line">            android:propertyName&#x3D;&quot;translationX&quot;</span><br><span class="line">            android:valueFrom&#x3D;&quot;0&quot;</span><br><span class="line">            android:valueTo&#x3D;&quot;300&quot;</span><br><span class="line">            android:valueType&#x3D;&quot;floatType&quot; &gt;</span><br><span class="line">        &lt;&#x2F;objectAnimator&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;objectAnimator</span><br><span class="line">            android:duration&#x3D;&quot;3000&quot;</span><br><span class="line">            android:propertyName&#x3D;&quot;rotation&quot;</span><br><span class="line">            android:valueFrom&#x3D;&quot;0&quot;</span><br><span class="line">            android:valueTo&#x3D;&quot;360&quot;</span><br><span class="line">            android:valueType&#x3D;&quot;floatType&quot; &gt;</span><br><span class="line">        &lt;&#x2F;objectAnimator&gt;</span><br><span class="line">    &lt;&#x2F;set&gt;</span><br><span class="line"></span><br><span class="line">       </span><br><span class="line">&lt;&#x2F;set&gt;</span><br></pre></td></tr></table></figure>
@@ -358,6 +433,43 @@
 <li>效果图</li>
 </ul>
 <p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2017-46-16.gif" alt="效果图"></p>
+<h3 id="2-2-插值器与估值器"><a href="#2-2-插值器与估值器" class="headerlink" title="2.2 插值器与估值器"></a>2.2 插值器与估值器</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>定义</th>
+<th>作用</th>
+<th>应用场景</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>插值器</td>
+<td>辅助动画实现的接口</td>
+<td>设置属性值从初始值过渡到结束值的变化规律</td>
+<td>实现非线性运动的动画效果</td>
+<td>内置9种插值器/自定义插值器实现</td>
+</tr>
+<tr>
+<td>估值器</td>
+<td>辅助动画插值器的接口</td>
+<td>设置属性值从初始值过渡到结束值的变化具体数值</td>
+<td>协助插值器 实现非线性运动的动画效果</td>
+<td>内置3种估值器/自定义估值器实现</td>
+</tr>
+</tbody></table>
+<h4 id="插值器使用"><a href="#插值器使用" class="headerlink" title="插值器使用"></a>插值器使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;xml设置</span><br><span class="line">android:interpolator&#x3D;&quot;@android:anim&#x2F;overshoot_interpolator&quot;</span><br><span class="line">&#x2F;&#x2F;Java代码设置</span><br><span class="line">Interpolator overshootInterpolator &#x3D; new OvershootInterpolator();</span><br><span class="line">animation.setInterpolator(overshootInterpolator);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011211411.png" alt="9种内置插值器"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/944365-0a9435149480729e.gif?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp" alt="9种插值器效果图"></p>
+<hr>
+<p>本文参考自：</p>
+<ul>
+<li>《Android开发艺术探索》</li>
+<li>《Android进阶之光》</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/carson_ho/article/details/79860980">Android动画：这是一份全面 &amp; 详细的动画使用攻略</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/6844904071216775176#heading-10">进阶之路 | 奇妙的Animation之旅</a></li>
+</ul>
 
     </div>
 
@@ -435,7 +547,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB"><span class="nav-number">1.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81View%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.</span> <span class="nav-text">一、View动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E8%A1%A5%E9%97%B4%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 补间动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E5%8D%95%E4%B8%AA%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1 单个动画使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#XML%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">XML设置法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%E4%BB%A3%E7%A0%81%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.1.1.1.2.</span> <span class="nav-text">Java代码设置法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E7%BB%84%E5%90%88%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2 组合动画使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%80%90%E5%B8%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 逐帧动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.2.</span> <span class="nav-text">二、属性动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 使用</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB"><span class="nav-number">1.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81View%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.</span> <span class="nav-text">一、View动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E8%A1%A5%E9%97%B4%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 补间动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%8A%A8%E7%94%BBxml%E4%BB%A3%E7%A0%81"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">四种动画xml代码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-set-%E8%A1%A8%E7%A4%BA%E5%8A%A8%E7%94%BB%E9%9B%86%E5%90%88%EF%BC%8C%E5%AF%B9%E5%BA%94AnimationSet%E7%B1%BB"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">1.set:表示动画集合，对应AnimationSet类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-rotate%EF%BC%9A%E8%A1%A8%E7%A4%BA%E6%97%8B%E8%BD%AC%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94RotateAnimation%E7%B1%BB%E3%80%82"><span class="nav-number">1.1.1.1.2.</span> <span class="nav-text">2.rotate：表示旋转动画，对应RotateAnimation类。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-translate%EF%BC%9A%E8%A1%A8%E7%A4%BA%E5%B9%B3%E7%A7%BB%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94TranslateAnimation%E7%B1%BB"><span class="nav-number">1.1.1.1.3.</span> <span class="nav-text">3.translate：表示平移动画，对应TranslateAnimation类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-alpha%EF%BC%9A%E8%A1%A8%E7%A4%BA%E9%80%8F%E6%98%8E%E5%BA%A6%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94AlphaAnimation%E7%B1%BB"><span class="nav-number">1.1.1.1.4.</span> <span class="nav-text">4.alpha：表示透明度动画，对应AlphaAnimation类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-scale%EF%BC%9A%E8%A1%A8%E7%A4%BA%E7%BC%A9%E6%94%BE%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94ScaleAnimation%E7%B1%BB"><span class="nav-number">1.1.1.1.5.</span> <span class="nav-text">5.scale：表示缩放动画，对应ScaleAnimation类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E5%8D%95%E4%B8%AA%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.1 单个动画使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#XML%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">XML设置法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%E4%BB%A3%E7%A0%81%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.1.1.2.2.</span> <span class="nav-text">Java代码设置法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E7%BB%84%E5%90%88%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.2 组合动画使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%80%90%E5%B8%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 逐帧动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.2.</span> <span class="nav-text">二、属性动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Java 设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">XML设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%8F%92%E5%80%BC%E5%99%A8%E4%B8%8E%E4%BC%B0%E5%80%BC%E5%99%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 插值器与估值器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E5%80%BC%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">插值器使用</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
