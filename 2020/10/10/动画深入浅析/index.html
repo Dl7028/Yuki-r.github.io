@@ -22,11 +22,12 @@
 
   <meta name="description" content="动画">
 <meta property="og:type" content="article">
-<meta property="og:title" content="‘动画深入浅析">
+<meta property="og:title" content="动画深入浅析">
 <meta property="og:url" content="http://example.com/2020/10/10/%E5%8A%A8%E7%94%BB%E6%B7%B1%E5%85%A5%E6%B5%85%E6%9E%90/index.html">
 <meta property="og:site_name" content="Yuki-r Blog">
 <meta property="og:description" content="动画">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201013201347.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011104526.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011203608.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011111732.png">
@@ -35,11 +36,12 @@
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/GIF%202020-10-11%2017-46-16.gif">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011211411.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-0a9435149480729e.gif?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp">
+<meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201013201022.png">
 <meta property="article:published_time" content="2020-10-10T13:46:21.000Z">
-<meta property="article:modified_time" content="2020-10-11T13:41:11.226Z">
+<meta property="article:modified_time" content="2020-10-13T12:18:45.405Z">
 <meta property="article:author" content="Yuki">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011104526.png">
+<meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201013201347.png">
 
 <link rel="canonical" href="http://example.com/2020/10/10/%E5%8A%A8%E7%94%BB%E6%B7%B1%E5%85%A5%E6%B5%85%E6%9E%90/">
 
@@ -54,7 +56,7 @@
   };
 </script>
 
-  <title>‘动画深入浅析 | Yuki-r Blog</title>
+  <title>动画深入浅析 | Yuki-r Blog</title>
   
 
 
@@ -172,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ‘动画深入浅析
+          动画深入浅析
         </h1>
 
         <div class="post-meta">
@@ -189,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-11 21:41:11" itemprop="dateModified" datetime="2020-10-11T21:41:11+08:00">2020-10-11</time>
+                <time title="修改时间：2020-10-13 20:18:45" itemprop="dateModified" datetime="2020-10-13T20:18:45+08:00">2020-10-13</time>
               </span>
 
           
@@ -205,6 +207,7 @@
       
         <h1 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h1><a id="more"></a>
 
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201013201347.png"></p>
 <h2 id="一、View动画"><a href="#一、View动画" class="headerlink" title="一、View动画"></a>一、View动画</h2><blockquote>
 <p>View动画包括：补间动画、逐帧动画。</p>
 </blockquote>
@@ -458,10 +461,55 @@
 <td>内置3种估值器/自定义估值器实现</td>
 </tr>
 </tbody></table>
-<h4 id="插值器使用"><a href="#插值器使用" class="headerlink" title="插值器使用"></a>插值器使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;xml设置</span><br><span class="line">android:interpolator&#x3D;&quot;@android:anim&#x2F;overshoot_interpolator&quot;</span><br><span class="line">&#x2F;&#x2F;Java代码设置</span><br><span class="line">Interpolator overshootInterpolator &#x3D; new OvershootInterpolator();</span><br><span class="line">animation.setInterpolator(overshootInterpolator);</span><br></pre></td></tr></table></figure>
+<h4 id="插值器"><a href="#插值器" class="headerlink" title="插值器"></a>插值器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;xml设置</span><br><span class="line">android:interpolator&#x3D;&quot;@android:anim&#x2F;overshoot_interpolator&quot;</span><br><span class="line">&#x2F;&#x2F;Java代码设置</span><br><span class="line">Interpolator overshootInterpolator &#x3D; new OvershootInterpolator();</span><br><span class="line">animation.setInterpolator(overshootInterpolator);</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201011211411.png" alt="9种内置插值器"></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/944365-0a9435149480729e.gif?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp" alt="9种插值器效果图"></p>
+<h4 id="估值器"><a href="#估值器" class="headerlink" title="估值器"></a>估值器</h4><ul>
+<li>作用：根据当前<strong>属性改变的百分比</strong>计算出<strong>改变后的属性值</strong>。</li>
+<li>常用的系统内置的估值器：</li>
+</ul>
+<blockquote>
+<ul>
+<li>整型估值器(<code>IntEvaluator</code>)</li>
+<li>浮点型估值器(<code>FloatEvaluator</code>)</li>
+<li>Color属性估值器(<code>ArgbEvaluator</code>)</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>仅针对于属性动画</strong>,View动画不需要类型估值器。是属性动画实现<strong>非匀速</strong>动画的重要手段。</li>
+</ul>
+<blockquote>
+<ul>
+<li>自定义插值器方法：实现 <code>Interpolator</code> / <code>TimeInterpolator</code>接口 ，然后复写<code>getInterpolation()</code></li>
+<li>自定义估值器方法：实现<code>TypeEvaluator</code>接口，然后复写<code>evaluate()</code>。</li>
+</ul>
+</blockquote>
+<p>推荐一篇插值器估值器的详细用法<a target="_blank" rel="noopener" href="https://blog.csdn.net/carson_ho/article/details/72863901">Android 动画：你真的会使用插值器与估值器吗？（含详细实例教学）</a></p>
+<h3 id="2-3-监听器"><a href="#2-3-监听器" class="headerlink" title="2.3 监听器"></a>2.3 监听器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">      Animation.addListener(new AnimatorListener() &#123;</span><br><span class="line">          @Override</span><br><span class="line">          public void onAnimationStart(Animation animation) &#123;</span><br><span class="line">              &#x2F;&#x2F;动画开始时执行</span><br><span class="line">          &#125;</span><br><span class="line">      </span><br><span class="line">           @Override</span><br><span class="line">          public void onAnimationRepeat(Animation animation) &#123;</span><br><span class="line">              &#x2F;&#x2F;动画重复时执行</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">         @Override</span><br><span class="line">          public void onAnimationCancel()(Animation animation) &#123;</span><br><span class="line">              &#x2F;&#x2F;动画取消时执行</span><br><span class="line">          &#125;</span><br><span class="line">    </span><br><span class="line">          @Override</span><br><span class="line">          public void onAnimationEnd(Animation animation) &#123;</span><br><span class="line">              &#x2F;&#x2F;动画结束时执行</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 特别注意：每次监听必须4个方法都重写。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Q:有些时候我们并不需要监听动画的所有时刻,不想写太多代码怎么办？</p>
+<p>采用动画适配器（<code>AnimatorListenerAdapter</code>）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">anim.addListener(new AnimatorListenerAdapter() &#123;  </span><br><span class="line">&#x2F;&#x2F; 向addListener()方法中传入适配器对象AnimatorListenerAdapter()</span><br><span class="line">&#x2F;&#x2F; 由于AnimatorListenerAdapter中已经实现好每个接口</span><br><span class="line">&#x2F;&#x2F; 所以这里不实现全部方法也不会报错</span><br><span class="line">    @Override  </span><br><span class="line">    public void onAnimationStart(Animator animation) &#123;  </span><br><span class="line">    &#x2F;&#x2F; 如想只想监听动画开始时刻，就只需要单独重写该方法就可以</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);  </span><br></pre></td></tr></table></figure>
+
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201013201022.png" alt="总结"></p>
+<blockquote>
+<p><code>ObjectAnimator</code>与 <code>ValueAnimator</code>类的区别：</p>
+<ul>
+<li><code>ValueAnimator</code> 类是先改变值，然后 <strong>手动赋值</strong> 给对象的属性从而实现动画；是 <strong>间接</strong> 对对象属性进行操作；</li>
+<li><code>ObjectAnimator</code> 类是先改变值，然后 <strong>自动赋值</strong> 给对象的属性从而实现动画；是 <strong>直接</strong> 对对象属性进行操作；</li>
+</ul>
+</blockquote>
+<p><code>ValueAnimator</code>类自动赋值的逻辑：</p>
+<ol>
+<li>初始化时，如果属性的初始值没有提供，则调用属性的 <code>get（）</code>进行取值；</li>
+<li>当 值 变化时，用对象该属性的 <code>set（）</code>方法，从而从而将新的属性值设置给对象属性。</li>
+</ol>
+<ul>
+<li><code>ObjectAnimator</code> 类针对的是<strong>任意对象 &amp; 任意属性值</strong>，并不是单单针对于View对象</li>
+<li>如果需要采用<code>ObjectAnimator</code> 类实现动画效果，那么需要操作的对象就必须有该属性的<code>set（） &amp; get（）</code></li>
+<li>同理，针对上述另外的三种基本动画效果，<code>View</code> 也存在着<code>setRotation()</code>、<code>getRotation()</code>、<code>setTranslationX()</code>、<code>getTranslationX()</code>、<code>setScaleY()</code>、<code>getScaleY()</code>等<code>set（）</code> &amp; <code>get（）</code> 。</li>
+</ul>
 <hr>
 <p>本文参考自：</p>
 <ul>
@@ -547,7 +595,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB"><span class="nav-number">1.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81View%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.</span> <span class="nav-text">一、View动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E8%A1%A5%E9%97%B4%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 补间动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%8A%A8%E7%94%BBxml%E4%BB%A3%E7%A0%81"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">四种动画xml代码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-set-%E8%A1%A8%E7%A4%BA%E5%8A%A8%E7%94%BB%E9%9B%86%E5%90%88%EF%BC%8C%E5%AF%B9%E5%BA%94AnimationSet%E7%B1%BB"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">1.set:表示动画集合，对应AnimationSet类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-rotate%EF%BC%9A%E8%A1%A8%E7%A4%BA%E6%97%8B%E8%BD%AC%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94RotateAnimation%E7%B1%BB%E3%80%82"><span class="nav-number">1.1.1.1.2.</span> <span class="nav-text">2.rotate：表示旋转动画，对应RotateAnimation类。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-translate%EF%BC%9A%E8%A1%A8%E7%A4%BA%E5%B9%B3%E7%A7%BB%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94TranslateAnimation%E7%B1%BB"><span class="nav-number">1.1.1.1.3.</span> <span class="nav-text">3.translate：表示平移动画，对应TranslateAnimation类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-alpha%EF%BC%9A%E8%A1%A8%E7%A4%BA%E9%80%8F%E6%98%8E%E5%BA%A6%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94AlphaAnimation%E7%B1%BB"><span class="nav-number">1.1.1.1.4.</span> <span class="nav-text">4.alpha：表示透明度动画，对应AlphaAnimation类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-scale%EF%BC%9A%E8%A1%A8%E7%A4%BA%E7%BC%A9%E6%94%BE%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94ScaleAnimation%E7%B1%BB"><span class="nav-number">1.1.1.1.5.</span> <span class="nav-text">5.scale：表示缩放动画，对应ScaleAnimation类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E5%8D%95%E4%B8%AA%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.1 单个动画使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#XML%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">XML设置法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%E4%BB%A3%E7%A0%81%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.1.1.2.2.</span> <span class="nav-text">Java代码设置法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E7%BB%84%E5%90%88%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.2 组合动画使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%80%90%E5%B8%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 逐帧动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.2.</span> <span class="nav-text">二、属性动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Java 设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">XML设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%8F%92%E5%80%BC%E5%99%A8%E4%B8%8E%E4%BC%B0%E5%80%BC%E5%99%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 插值器与估值器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E5%80%BC%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">插值器使用</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB"><span class="nav-number">1.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81View%E5%8A%A8%E7%94%BB"><span class="nav-number">1.2.</span> <span class="nav-text">一、View动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E8%A1%A5%E9%97%B4%E5%8A%A8%E7%94%BB"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1 补间动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%8A%A8%E7%94%BBxml%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">四种动画xml代码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-set-%E8%A1%A8%E7%A4%BA%E5%8A%A8%E7%94%BB%E9%9B%86%E5%90%88%EF%BC%8C%E5%AF%B9%E5%BA%94AnimationSet%E7%B1%BB"><span class="nav-number">1.2.1.1.1.</span> <span class="nav-text">1.set:表示动画集合，对应AnimationSet类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-rotate%EF%BC%9A%E8%A1%A8%E7%A4%BA%E6%97%8B%E8%BD%AC%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94RotateAnimation%E7%B1%BB%E3%80%82"><span class="nav-number">1.2.1.1.2.</span> <span class="nav-text">2.rotate：表示旋转动画，对应RotateAnimation类。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-translate%EF%BC%9A%E8%A1%A8%E7%A4%BA%E5%B9%B3%E7%A7%BB%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94TranslateAnimation%E7%B1%BB"><span class="nav-number">1.2.1.1.3.</span> <span class="nav-text">3.translate：表示平移动画，对应TranslateAnimation类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-alpha%EF%BC%9A%E8%A1%A8%E7%A4%BA%E9%80%8F%E6%98%8E%E5%BA%A6%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94AlphaAnimation%E7%B1%BB"><span class="nav-number">1.2.1.1.4.</span> <span class="nav-text">4.alpha：表示透明度动画，对应AlphaAnimation类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-scale%EF%BC%9A%E8%A1%A8%E7%A4%BA%E7%BC%A9%E6%94%BE%E5%8A%A8%E7%94%BB%EF%BC%8C%E5%AF%B9%E5%BA%94ScaleAnimation%E7%B1%BB"><span class="nav-number">1.2.1.1.5.</span> <span class="nav-text">5.scale：表示缩放动画，对应ScaleAnimation类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E5%8D%95%E4%B8%AA%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">1.1.1 单个动画使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#XML%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.2.1.2.1.</span> <span class="nav-text">XML设置法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%E4%BB%A3%E7%A0%81%E8%AE%BE%E7%BD%AE%E6%B3%95"><span class="nav-number">1.2.1.2.2.</span> <span class="nav-text">Java代码设置法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E7%BB%84%E5%90%88%E5%8A%A8%E7%94%BB%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">1.1.2 组合动画使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%80%90%E5%B8%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2 逐帧动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB"><span class="nav-number">1.3.</span> <span class="nav-text">二、属性动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Java 设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">XML设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%8F%92%E5%80%BC%E5%99%A8%E4%B8%8E%E4%BC%B0%E5%80%BC%E5%99%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 插值器与估值器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E5%80%BC%E5%99%A8"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">插值器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%B0%E5%80%BC%E5%99%A8"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">估值器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%9B%91%E5%90%AC%E5%99%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3 监听器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">三、总结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
