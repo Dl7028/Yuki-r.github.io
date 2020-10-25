@@ -168,8 +168,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-10-25 20:45:44" itemprop="dateCreated datePublished" datetime="2020-10-25T20:45:44+08:00">2020-10-25</time>
+              <time title="创建时间：2020-10-25 20:45:44 / 修改时间：22:38:20" itemprop="dateCreated datePublished" datetime="2020-10-25T20:45:44+08:00">2020-10-25</time>
             </span>
 
           
@@ -183,7 +184,59 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>如今使用Android JetPack组件的开发环境越来越成熟，Kotlin距离被官宣Android开发第一语言也已经过去2年了，我们有理由相信未来开发的主流就是使用JetPack架构组件开发。</p>
+<p>那么怎样标准的使用JetPack去开发应用呢？</p>
+<p>这个谷歌已经给我们设计好了模板，那就是<a target="_blank" rel="noopener" href="https://github.com/android/sunflower"><strong>sunflower</strong></a>项目。</p>
+<p>只要我们学会了模板里面的用法，相信你离自己写一个Jetpack项目也不远了，</p>
+<p>本文主要对项目的逻辑进行说明，便于读者更加高速的理解JetPack标准架构的开发。</p>
+</blockquote>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h4 id="知识点储备"><a href="#知识点储备" class="headerlink" title="知识点储备"></a>知识点储备</h4><ul>
+<li>语言：Kotlin</li>
+<li>架构：MVVM</li>
+<li>组件：ViewModel，LiveData，Databinding，Hilt，Room，WorkManager，Navigation</li>
+</ul>
+<blockquote>
+<p>组件的用法详情建议看官方文档。</p>
+</blockquote>
+<h4 id="下载项目"><a href="#下载项目" class="headerlink" title="下载项目"></a>下载项目</h4><blockquote>
+<p>在<a target="_blank" rel="noopener" href="https://github.com/android/sunflower">github传送</a>克隆或者下载zip包到本地上。</p>
+</blockquote>
+<p>下载完运行程序会有以下界面：</p>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201025210453.png"></p>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201025210520.png"></p>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201025210532.png"></p>
+<h3 id="一、界面篇"><a href="#一、界面篇" class="headerlink" title="一、界面篇"></a>一、界面篇</h3><p>这是一个典型的单Activity多fragment界面的程序，用项目中的名称来说，这个项目只有一个GardenActivity，在GardenActivity上有多个4个fragment。</p>
+<p>这是GardenActivity的布局代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;layout</span><br><span class="line">    xmlns:android&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;</span><br><span class="line">    xmlns:app&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res-auto&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;androidx.fragment.app.FragmentContainerView</span><br><span class="line">        android:id&#x3D;&quot;@+id&#x2F;nav_host&quot;</span><br><span class="line">        android:name&#x3D;&quot;androidx.navigation.fragment.NavHostFragment&quot;</span><br><span class="line">        android:layout_width&#x3D;&quot;match_parent&quot;</span><br><span class="line">        android:layout_height&#x3D;&quot;match_parent&quot;</span><br><span class="line">        app:defaultNavHost&#x3D;&quot;true&quot;</span><br><span class="line">        app:navGraph&#x3D;&quot;@navigation&#x2F;nav_garden&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;layout&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里对fragment的操作的就涉及到了JetPack组件中的Navigation，Navigation将fragment联系在一起,这是Navigation的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;navigation xmlns:android&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;</span><br><span class="line">    xmlns:app&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res-auto&quot;</span><br><span class="line">    xmlns:tools&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;tools&quot;</span><br><span class="line">    app:startDestination&#x3D;&quot;@id&#x2F;view_pager_fragment&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;fragment</span><br><span class="line">        android:id&#x3D;&quot;@+id&#x2F;view_pager_fragment&quot;</span><br><span class="line">        android:name&#x3D;&quot;com.google.samples.apps.sunflower.HomeViewPagerFragment&quot;</span><br><span class="line">        tools:layout&#x3D;&quot;@layout&#x2F;fragment_view_pager&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;action</span><br><span class="line">                android:id&#x3D;&quot;@+id&#x2F;action_view_pager_fragment_to_plant_detail_fragment&quot;</span><br><span class="line">                app:destination&#x3D;&quot;@id&#x2F;plant_detail_fragment&quot;</span><br><span class="line">                app:enterAnim&#x3D;&quot;@anim&#x2F;slide_in_right&quot;</span><br><span class="line">                app:exitAnim&#x3D;&quot;@anim&#x2F;slide_out_left&quot;</span><br><span class="line">                app:popEnterAnim&#x3D;&quot;@anim&#x2F;slide_in_left&quot;</span><br><span class="line">                app:popExitAnim&#x3D;&quot;@anim&#x2F;slide_out_right&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;fragment&gt;</span><br><span class="line"></span><br><span class="line">    &lt;fragment</span><br><span class="line">        android:id&#x3D;&quot;@+id&#x2F;plant_detail_fragment&quot;</span><br><span class="line">        android:name&#x3D;&quot;com.google.samples.apps.sunflower.PlantDetailFragment&quot;</span><br><span class="line">        android:label&#x3D;&quot;@string&#x2F;plant_details_title&quot;</span><br><span class="line">        tools:layout&#x3D;&quot;@layout&#x2F;fragment_plant_detail&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;action</span><br><span class="line">            android:id&#x3D;&quot;@+id&#x2F;action_plant_detail_fragment_to_gallery_fragment&quot;</span><br><span class="line">            app:destination&#x3D;&quot;@id&#x2F;gallery_fragment&quot;</span><br><span class="line">            app:enterAnim&#x3D;&quot;@anim&#x2F;slide_in_right&quot;</span><br><span class="line">            app:exitAnim&#x3D;&quot;@anim&#x2F;slide_out_left&quot;</span><br><span class="line">            app:popEnterAnim&#x3D;&quot;@anim&#x2F;slide_in_left&quot;</span><br><span class="line">            app:popExitAnim&#x3D;&quot;@anim&#x2F;slide_out_right&quot; &#x2F;&gt;</span><br><span class="line">        &lt;argument</span><br><span class="line">            android:name&#x3D;&quot;plantId&quot;</span><br><span class="line">            app:argType&#x3D;&quot;string&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;fragment&gt;</span><br><span class="line"></span><br><span class="line">    &lt;fragment</span><br><span class="line">        android:id&#x3D;&quot;@+id&#x2F;gallery_fragment&quot;</span><br><span class="line">        android:name&#x3D;&quot;com.google.samples.apps.sunflower.GalleryFragment&quot;</span><br><span class="line">        android:label&#x3D;&quot;@string&#x2F;plant_details_title&quot;</span><br><span class="line">        tools:layout&#x3D;&quot;@layout&#x2F;fragment_gallery&quot;&gt;</span><br><span class="line">        &lt;argument</span><br><span class="line">            android:name&#x3D;&quot;plantName&quot;</span><br><span class="line">            app:argType&#x3D;&quot;string&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;fragment&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;navigation&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201025211235.png" alt="Navigation视图"></p>
+<p>到目前为止，这只是Activity的一个局部布局，完整的布局还是Toolbar+TabLayout+ViewPager2+fragment结构。这4个界面的关系就是下图所示</p>
+<p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201025212741.png"></p>
+<h2 id="二、Fragment篇"><a href="#二、Fragment篇" class="headerlink" title="二、Fragment篇"></a>二、Fragment篇</h2><blockquote>
+<p>上面讲述了sunflower的基本布局，相信你对它的大致布局已经有了了解，在这一节中将讲述fragment中的代码功能。</p>
+</blockquote>
+<h4 id="PlantListFragment"><a href="#PlantListFragment" class="headerlink" title="PlantListFragment"></a>PlantListFragment</h4><p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201025210520.png"></p>
+<blockquote>
+<p>看到这个界面，你首先会想到什么？</p>
+</blockquote>
+<p>在这个界面中，就只有一个RecycleView，想到的当然是它访问网络获取数据显示到UI界面的流程。</p>
+<p>思想跟使用 MVP+RxJava+Retrofit 组合是基本一致的，无非就是调用接口，获取数据，回调主线程更新UI。</p>
+<p>接下来，让我们来看看它是怎么走完这个流程的。</p>
+<p>从哪个部分开始呢？UI？还是网络？</p>
+<p>我们需要先明确一个点，MVVM架构是数据驱动更新界面,而我们平时使用的MVP架构是UI驱动，也就是使用MVP时，我们是需要手动的更新UI，而在使用MVVM时，当数据改变时，UI会自动更新。</p>
+<p>那么自然而然的，一切的源头都从网络层开始说起，这个时候，储备的知识点WorkManager要用上了，看代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class SeedDatabaseWorker(</span><br><span class="line">    context: Context,</span><br><span class="line">    workerParams: WorkerParameters</span><br><span class="line">) : CoroutineWorker(context, workerParams) &#123;  &#x2F;&#x2F;用 CoroutineWorker 处理线程  使用协程</span><br><span class="line">    override suspend fun doWork(): Result &#x3D; coroutineScope &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            applicationContext.assets.open(PLANT_DATA_FILENAME).use &#123; inputStream -&gt;</span><br><span class="line">                JsonReader(inputStream.reader()).use &#123; jsonReader -&gt;</span><br><span class="line">                    val plantType &#x3D; object : TypeToken&lt;List&lt;Plant&gt;&gt;() &#123;&#125;.type</span><br><span class="line">                    val plantList: List&lt;Plant&gt; &#x3D; Gson().fromJson(jsonReader, plantType)</span><br><span class="line"></span><br><span class="line">                    val database &#x3D; AppDatabase.getInstance(applicationContext) &#x2F;&#x2F;创建数据库</span><br><span class="line">                    database.plantDao().insertAll(plantList) &#x2F;&#x2F;获取数据存放进数据库</span><br><span class="line"></span><br><span class="line">                    Result.success()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (ex: Exception) &#123;</span><br><span class="line">            Log.e(TAG, &quot;Error seeding database&quot;, ex)</span><br><span class="line">            Result.failure()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    companion object &#123;</span><br><span class="line">        private const val TAG &#x3D; &quot;SeedDatabaseWorker&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里使用了WorkManager，则表示了它是一个后台任务，即我们在启动app时</p>
+
       
     </div>
 
@@ -225,10 +278,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-24 11:38:14 / 修改时间：11:38:15" itemprop="dateCreated datePublished" datetime="2020-10-24T11:38:14+08:00">2020-10-24</time>
+              <time title="创建时间：2020-10-24 11:38:14" itemprop="dateCreated datePublished" datetime="2020-10-24T11:38:14+08:00">2020-10-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-25 20:46:52" itemprop="dateModified" datetime="2020-10-25T20:46:52+08:00">2020-10-25</time>
+              </span>
 
           
 
@@ -241,7 +300,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h2 id="jetPack组件"><a href="#jetPack组件" class="headerlink" title="jetPack组件"></a>jetPack组件</h2><h3 id="ViewModel"><a href="#ViewModel" class="headerlink" title="ViewModel"></a>ViewModel</h3><h3 id="LiveData"><a href="#LiveData" class="headerlink" title="LiveData"></a>LiveData</h3><h3 id="DataBinDing"><a href="#DataBinDing" class="headerlink" title="DataBinDing"></a>DataBinDing</h3><h3 id="Paging"><a href="#Paging" class="headerlink" title="Paging"></a>Paging</h3><h3 id="Navigation"><a href="#Navigation" class="headerlink" title="Navigation"></a>Navigation</h3><h3 id="Room"><a href="#Room" class="headerlink" title="Room"></a>Room</h3><h3 id="Hilt"><a href="#Hilt" class="headerlink" title="Hilt"></a>Hilt</h3><h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><h3 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h3>
       
     </div>
 
