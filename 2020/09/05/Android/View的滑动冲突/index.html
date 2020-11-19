@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.前言上一篇写了View的事件分发机制，Android View的事件分发机制简单理解 有了一点事件分发的基本理解，再来看这个滑动冲突就能更好的接收这个解决思路。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="View的滑动冲突">
+<meta property="og:url" content="http://example.com/2020/09/05/Android/View%E7%9A%84%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81/index.html">
+<meta property="og:site_name" content="Yuki-r Blog">
+<meta property="og:description" content="1.前言上一篇写了View的事件分发机制，Android View的事件分发机制简单理解 有了一点事件分发的基本理解，再来看这个滑动冲突就能更好的接收这个解决思路。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9ub3RlLnlvdWRhby5jb20veXdzL3B1YmxpYy9yZXNvdXJjZS9iNzlkZjYwNjU1NTIxMDc1MThiMGVhYmRkMDU3MzIyNy94bWxub3RlL0E2MThBMTQ2OTFDOTRENTY5QTlEOTQ2N0FFNzg0RUE2LzUxMjI?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9ub3RlLnlvdWRhby5jb20veXdzL3B1YmxpYy9yZXNvdXJjZS9iNzlkZjYwNjU1NTIxMDc1MThiMGVhYmRkMDU3MzIyNy94bWxub3RlLzEwRjNCMzM0OUU0ODQzQzI5MDJCMDk4NzUxRDk2ODZELzUxMjc?x-oss-process=image/format,png">
+<meta property="article:published_time" content="2020-09-04T18:47:28.000Z">
+<meta property="article:modified_time" content="2020-09-09T13:56:12.085Z">
+<meta property="article:author" content="Yuki">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9ub3RlLnlvdWRhby5jb20veXdzL3B1YmxpYy9yZXNvdXJjZS9iNzlkZjYwNjU1NTIxMDc1MThiMGVhYmRkMDU3MzIyNy94bWxub3RlL0E2MThBMTQ2OTFDOTRENTY5QTlEOTQ2N0FFNzg0RUE2LzUxMjI?x-oss-process=image/format,png">
+
+<link rel="canonical" href="http://example.com/2020/09/05/Android/View%E7%9A%84%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>View的滑动冲突 | Yuki-r Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yuki-r Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/05/Android/View%E7%9A%84%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/suoda.jpg">
+      <meta itemprop="name" content="Yuki">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuki-r Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          View的滑动冲突
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-05 02:47:28" itemprop="dateCreated datePublished" datetime="2020-09-05T02:47:28+08:00">2020-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-09 21:56:12" itemprop="dateModified" datetime="2020-09-09T21:56:12+08:00">2020-09-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h1><p>上一篇写了View的事件分发机制，<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44830568/article/details/105401099">Android View的事件分发机制简单理解
+</a>有了一点事件分发的基本理解，再来看这个滑动冲突就能更好的接收这个解决思路。</p>
+<a id="more"></a>
+
+<h1 id="2-常见的滑动冲突场景"><a href="#2-常见的滑动冲突场景" class="headerlink" title="2.常见的滑动冲突场景"></a>2.常见的滑动冲突场景</h1><p>常见的滑动冲突有以下三种：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9ub3RlLnlvdWRhby5jb20veXdzL3B1YmxpYy9yZXNvdXJjZS9iNzlkZjYwNjU1NTIxMDc1MThiMGVhYmRkMDU3MzIyNy94bWxub3RlL0E2MThBMTQ2OTFDOTRENTY5QTlEOTQ2N0FFNzg0RUE2LzUxMjI?x-oss-process=image/format,png" alt="场景1.2.3"></p>
+<ul>
+<li>场景A：外部滑动与内部滑动不一致的滑动冲突；</li>
+<li>场景B：外部滑动与内部滑动一致的滑动冲突；</li>
+<li>场景C：场景AB的嵌套；</li>
+</ul>
+<p><strong>A</strong> .这个情况常见于ViewPager和Fragment中LisetView的使用，然而ViewPager和内部处理了这种冲突，所以我们在使用时感觉不到有冲突事件，若是把ViewPager换成ScrollView等，就需要处理冲突。同样的，外部上下，内部左右也属于这一类冲突。<br><strong>B</strong> .内外两层同个方向的滑动出现的滑动冲突，这种场景可能出现在自定义View与ListView中，外部可以上下滑动，内部也可以上下滑动，这时候处理冲突的方法就需要根据滑动的逻辑去处理。<br><strong>C</strong> .这个场景就是上面两种场景的嵌套，内层有一个场景A的滑动效果，外部又有一个左右滑动的效果，嵌套起来看起来更复杂，但是它是几个单一的滑动冲突的叠加，只需要分别处理内层和中层，中层和外层之间的滑动冲突即可。</p>
+<h1 id="3-滑动冲突的处理规则"><a href="#3-滑动冲突的处理规则" class="headerlink" title="3.滑动冲突的处理规则"></a>3.滑动冲突的处理规则</h1><p>对于场景A，它的处理规则：当用户左右滑动时，让外部的View拦截点击事件，当用户上下滑动时，让内部的View拦截点击事件。那怎么判断用互是左右滑动还是上下滑动呢？<br>有很多种方法，这里介绍一种依据水平方向和竖直方向上的距离差来判断的方法。利用水平偏移量和竖直方向的偏移量进行相减，用是否大于0来判断哪个偏移量大。<br>如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9ub3RlLnlvdWRhby5jb20veXdzL3B1YmxpYy9yZXNvdXJjZS9iNzlkZjYwNjU1NTIxMDc1MThiMGVhYmRkMDU3MzIyNy94bWxub3RlLzEwRjNCMzM0OUU0ODQzQzI5MDJCMDk4NzUxRDk2ODZELzUxMjc?x-oss-process=image/format,png" alt="在这里插入图片描述"><br>偏移量offsetX-offsetY&gt;0,可判断为水平滑动，这时可以由外部拦截，让它来处理点击事件。<br>对于场景B，就不能使用这个方法判断滑动事件由谁处理，因为它是同个方向的滑动，这时需要根据业务逻辑来处理，比如业务规定：当处于某种状态时需要用外部来的View来处理滑动，而处于另一种状态时需要内部View来处理滑动，这时需要根据自身的业务逻辑来处理。</p>
+<h1 id="4-滑动冲突的解决方式"><a href="#4-滑动冲突的解决方式" class="headerlink" title="4.滑动冲突的解决方式"></a>4.滑动冲突的解决方式</h1><p>处理滑动冲突有经典的两种方法：外部拦截法和内部拦截法。</p>
+<h2 id="4-1外部拦截法"><a href="#4-1外部拦截法" class="headerlink" title="4.1外部拦截法"></a>4.1外部拦截法</h2><p>点击事件都先经过父容器的拦截处理，如果父容器需要此事件就拦截，不需要此事件则不拦截。重写onInterceptTouchEvent，<br>伪代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">    public boolean onInterceptTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">        boolean intercepted &#x3D; false;</span><br><span class="line">        int x &#x3D; (int)ev.getX();</span><br><span class="line">        int y &#x3D; (int)ev.getY();</span><br><span class="line">        switch (ev.getAction())&#123;</span><br><span class="line">            case MotionEvent.ACTION_DOWN:</span><br><span class="line">                intercepted &#x3D; false;</span><br><span class="line">                break;</span><br><span class="line">            case MotionEvent.ACTION_MOVE:</span><br><span class="line">                if(父容器需要当前点击事件)&#123;</span><br><span class="line">                    intercepted &#x3D;true;</span><br><span class="line">                &#125;else &#123;</span><br><span class="line">                    intercepted &#x3D; false;</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case MotionEvent.ACTION_UP:</span><br><span class="line">                intercepted &#x3D; false;</span><br><span class="line">                break;</span><br><span class="line">            default:</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">        mLastXIntercept &#x3D; x;</span><br><span class="line">        mLastYIntercept &#x3D; y;</span><br><span class="line">        return intercepted;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述伪代码是外部拦截法的典型逻辑，利用外部拦截法去解决冲突事件时，只需要更改上述括号内“父容器需要当前点击事件”的条件就可以了。<br>在onInterceptTouchEvent方法中</p>
+<ul>
+<li><p><strong>ACTION_DOWN事件</strong>：父容器必须返回false，返回true表示父容器要拦截这个事件，一旦父容器拦截了ACTION_DOWN事件，接下来的ACTION_MOVE和ACTION_UP事件都会直接交给父容器处理，无法传递个子元素，因此必须返回false。</p>
+</li>
+<li><p><strong>ACTION_DOWN事件</strong>：根据拦截条件确定是否拦截，需要拦截则返回true，不需要拦截则返回false。</p>
+</li>
+<li><p><strong>ACTION_UP事件</strong>：必须返回false。如果点击事件交给了子元素处理，而ACTION_UP返回true，即父容器拦截了这个事件，则子元素的onClik方法就无法触发。如果点击事件交给了父容器处理，即父容器在ACTION_DOWN中拦截了此事件，则后续的ACTION_UP事件也一定是交给父容器处理了，此时无论返回ture或者false都无法改变，因此ACTION_UP事件中需要返回false。</p>
+<h2 id="4-2内部拦截法"><a href="#4-2内部拦截法" class="headerlink" title="4.2内部拦截法"></a>4.2内部拦截法</h2><p>父容器不拦截任何事件，所有的事件都传递给子元素，如果子元素需要此事件则直接消耗掉，否则交给父容器处理。<br>伪代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public boolean dispatchTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">       int x &#x3D; (int)ev.getX();</span><br><span class="line">       int y &#x3D; (int)ev.getY();</span><br><span class="line">       switch (ev.getAction())&#123;</span><br><span class="line">           case MotionEvent.ACTION_DOWN:</span><br><span class="line">               parent.requestDisallowInterceptTouchEvent(true); &#x2F;&#x2F;不拦截事件</span><br><span class="line">           case MotionEvent.ACTION_MOVE:</span><br><span class="line">               int deltaX &#x3D; x - mLastX;</span><br><span class="line">               int deltaY &#x3D; y - mLastY;</span><br><span class="line">               if(父容器需要此类点击事件)&#123;</span><br><span class="line">                   parent.requestDisallowInterceptTouchEvent(false);  &#x2F;&#x2F;拦截事件</span><br><span class="line">               &#125;</span><br><span class="line">               break;</span><br><span class="line">           case MotionEvent.ACTION_UP:</span><br><span class="line">               break;</span><br><span class="line">           default:</span><br><span class="line">               break;</span><br><span class="line">       &#125;</span><br><span class="line">       mLastX &#x3D; x;</span><br><span class="line">       mLastY &#x3D; y;</span><br><span class="line">       return super.dispatchTouchEvent(ev);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>同外部拦截法用法一样，使用时只需改动“父容器需要此类点击事件”条件，其他代码不变。</p>
+</li>
+</ul>
+<p><strong>requestDisallowInterceptTouchEvent</strong>：在View的事件分发机制中讲到，点击事件是从父view传递到子view中，每一层的view可以决定是否拦截并处理点击事件或者传递到下一层，如果子view不处理点击事件，则该事件会传递会父view，由父view去决定是否处理该点击事件。</p>
+<p>在子view可以通过设置此方法去告诉父view不要拦截并处理点击事件，父view应该接受这个请求直到此次点击事件结束，设置false表示需要父View拦截并处理这个事件。</p>
+<p>参考自：<br>《Android开发艺术探索》</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/09/Android/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-Activity%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="next" title="读书笔记|Activity的生命周期和启动模式">
+      读书笔记|Activity的生命周期和启动模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%B8%B8%E8%A7%81%E7%9A%84%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81%E5%9C%BA%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">2.常见的滑动冲突场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81%E7%9A%84%E5%A4%84%E7%90%86%E8%A7%84%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">3.滑动冲突的处理规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4.滑动冲突的解决方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1%E5%A4%96%E9%83%A8%E6%8B%A6%E6%88%AA%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">4.1外部拦截法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2%E5%86%85%E9%83%A8%E6%8B%A6%E6%88%AA%E6%B3%95"><span class="nav-number">4.2.</span> <span class="nav-text">4.2内部拦截法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yuki"
+      src="/images/suoda.jpg">
+  <p class="site-author-name" itemprop="name">Yuki</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yuki-r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yuki-r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yuki</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
