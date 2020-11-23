@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119180741.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119180753.png">
 <meta property="article:published_time" content="2020-11-18T14:59:02.625Z">
-<meta property="article:modified_time" content="2020-11-22T14:14:52.513Z">
+<meta property="article:modified_time" content="2020-11-23T09:02:26.209Z">
 <meta property="article:author" content="Yuki">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119175733.png">
@@ -187,7 +187,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-22 22:14:52" itemprop="dateModified" datetime="2020-11-22T22:14:52+08:00">2020-11-22</time>
+                <time title="修改时间：2020-11-23 17:02:26" itemprop="dateModified" datetime="2020-11-23T17:02:26+08:00">2020-11-23</time>
               </span>
 
           
@@ -260,7 +260,72 @@
 <p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119101729.png"></p>
 <p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119180741.png"></p>
 <p><img src="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119180753.png"></p>
-<h1 id="试卷"><a href="#试卷" class="headerlink" title="试卷"></a>试卷</h1><h3 id="三、综合题"><a href="#三、综合题" class="headerlink" title="三、综合题"></a>三、综合题</h3><ol>
+<h1 id="试卷"><a href="#试卷" class="headerlink" title="试卷"></a>试卷</h1><h2 id="网络安全复习题"><a href="#网络安全复习题" class="headerlink" title="网络安全复习题"></a>网络安全复习题</h2><ol>
+<li>简述安全Hash函数要求满足的六个性质。</li>
+</ol>
+<blockquote>
+<p>（1）H能够应用于任何大小的模块</p>
+<p>（2）H产生固定长度的输出</p>
+<p>（3）对于任何给定的数据块x，H都能够相对容易地计算出H(x)，这样就使得硬件和软件实现变得切实可行</p>
+<p>（4）对于任何给定的值h来说，寻找满足H(x) = h的数据块x，在计算上是不可行的，</p>
+<p>（5）对于给定的数据块x来说，寻找满足H(y)=H(x)且y不等于x的数据块y，在计算上是不可行的</p>
+</blockquote>
+<ol start="2">
+<li>请说明公钥证书的产生过程，以及验证公钥证书的方法。</li>
+</ol>
+<blockquote>
+<p>公钥证书由公钥、公钥所有者的用户ID和可信的第三方（用户团体所信任的认证中心CA）签名的整数数据库组成。</p>
+<p>1）产生过程：没有签名的证书，包括用户ID和用户公钥，复制两份，一份给CA签名，一份用来产生散列码，再用CA的私钥来加密散列码，构成签名。再把签名加在有CA签名的证书上。</p>
+<p>2）验证：接收者利用CA的公钥进行签名解密，获得发送者的散列码。接收者再把得到的未经过签名的证书进行产生散列码，看得到的散列码与获得的散列码是否一样。</p>
+</blockquote>
+<ol start="3">
+<li>目前用来验证用户身份的方法有哪几类？分别举例说明。</li>
+</ol>
+<blockquote>
+<p>常见的身份认证方法：</p>
+<ul>
+<li><p>基于用户知道什么的身份认证：用户标识（ID）+口令</p>
+</li>
+<li><p>基于用户拥有什么的身份认证：令牌（磁卡）、智能卡。一次性口令</p>
+</li>
+<li><p>基于用户是谁的身份认证：</p>
+<p>生理特征：指纹、视网膜、脸型、掌纹等</p>
+<p>行为特征：声纹、手写签名等</p>
+</li>
+</ul>
+</blockquote>
+<ol start="4">
+<li>什么是重复攻击？请回答<code>IPSec</code>是如何采用窗口机制抵御重放攻击的。</li>
+</ol>
+<blockquote>
+<p>重放是指被动的捕获数据单元然后按照原来的顺序重新发送。</p>
+<p>设定窗口大小为W，若报文序号在N-W的左边，则丢弃；若序号在窗口内，则接收，并将相应的槽标记；若报文序号大于N+1，则接收，标记槽并将窗口右移</p>
+</blockquote>
+<ol start="5">
+<li>简述目前网络攻击的主要方式有哪些？</li>
+</ol>
+<blockquote>
+<ul>
+<li>利用系统缺陷</li>
+<li>利用用户单薄的安全意识</li>
+<li>内部用户的窃密，泄密和破坏</li>
+<li>恶意代码</li>
+<li>口令攻击和拒绝服务</li>
+</ul>
+</blockquote>
+<ol start="6">
+<li>请简述什么是置换算法和替代算法，并分别给出置换算法和替代算法的实例。</li>
+</ol>
+<blockquote>
+<p>置换算法：明文和密文的字母保持相同，但是顺序打乱了。如：栅栏密码</p>
+<p>替代算法：明文中的每一个符号被替换为密文中的另一个字符。如：凯撒密码</p>
+</blockquote>
+<ol start="7">
+<li>请简要说明如何通过<code>RSA</code>算法进行消息认证。</li>
+</ol>
+<blockquote>
+</blockquote>
+<h3 id="三、综合题"><a href="#三、综合题" class="headerlink" title="三、综合题"></a>三、综合题</h3><ol>
 <li><code>IPSec</code>和<code>IP</code>协议以及<code>VPN</code>的关系是什么？</li>
 </ol>
 <blockquote>
@@ -278,45 +343,38 @@
 <ol start="3">
 <li><code>VPN</code>有哪三种类型？它们的特点和应用场合分别是什么？</li>
 </ol>
-<p>答：</p>
 <p>（1）远程接入<code>VPN</code></p>
+<blockquote>
 <ul>
 <li>特点</li>
 </ul>
-<blockquote>
 <p>远程用户只需通过当地的<code>ISP</code>接入到Internet就可以和公司的<code>VPN</code>网关建立私有的隧道连接，并访问单位内部的资源</p>
-</blockquote>
 <ul>
 <li>应用场合</li>
 </ul>
-<blockquote>
 <p>单位内部人员在外部网络或家庭网络访问单位内部网络资源</p>
 </blockquote>
 <p>（2）内联网 <code>VPN</code></p>
+<blockquote>
 <ul>
 <li>特点</li>
 </ul>
-<blockquote>
 <p>通过公用网络进行企业内部的互联，是传统专网或其他企业网的扩展或替代形式</p>
-</blockquote>
 <ul>
 <li>应用场合</li>
 </ul>
-<blockquote>
 <p>企事业机构的总部、分支机构、办事处或移动办公人员可以通过公有网络组成企业内部网络</p>
 </blockquote>
 <p>（3）外联网<code>VPN</code></p>
+<blockquote>
 <ul>
 <li>特点</li>
 </ul>
-<blockquote>
 <p>一种网关对网关的<code>VPN</code>，但它需要有不同协议和设备之间的配合和不同的安全配置</p>
-</blockquote>
 <ul>
 <li>应用场合</li>
 </ul>
-<blockquote>
-<p>将企业网延伸至供应商、合作伙伴与客户处，在具有共同利益的不同企业间通过公网构筑VPN，使部分资源能够在不同的VPN用户间共享</p>
+<p>将企业网延伸至供应商、合作伙伴与客户处，在具有共同利益的不同企业间通过公网构筑<code>VPN</code>，使部分资源能够在不同的<code>VPN</code>用户间共享</p>
 </blockquote>
 <ol start="4">
 <li>什么是基于主机的IDS、基于网络的IDS、分布式IDS？</li>
@@ -415,7 +473,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">第一章 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AF%86%E7%A0%81%E5%AD%A6"><span class="nav-number">2.</span> <span class="nav-text">第二章 密码学</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%B6%88%E6%81%AF%E9%89%B4%E5%88%AB%E4%B8%8E%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="nav-number">3.</span> <span class="nav-text">第三章 消息鉴别与数字签名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="nav-number">4.</span> <span class="nav-text">第四章 身份认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%95%E5%8D%B7"><span class="nav-number">5.</span> <span class="nav-text">试卷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%BC%E5%90%88%E9%A2%98"><span class="nav-number">5.0.1.</span> <span class="nav-text">三、综合题</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">第一章 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AF%86%E7%A0%81%E5%AD%A6"><span class="nav-number">2.</span> <span class="nav-text">第二章 密码学</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%B6%88%E6%81%AF%E9%89%B4%E5%88%AB%E4%B8%8E%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="nav-number">3.</span> <span class="nav-text">第三章 消息鉴别与数字签名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="nav-number">4.</span> <span class="nav-text">第四章 身份认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%95%E5%8D%B7"><span class="nav-number">5.</span> <span class="nav-text">试卷</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%8D%E4%B9%A0%E9%A2%98"><span class="nav-number">5.1.</span> <span class="nav-text">网络安全复习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%BC%E5%90%88%E9%A2%98"><span class="nav-number">5.1.1.</span> <span class="nav-text">三、综合题</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
