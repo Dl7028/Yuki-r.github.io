@@ -23,7 +23,7 @@
   <meta name="description" content="第一章 概述 计算机网络安全的概念是什么？网络安全有哪几个特征？各特征的含义是什么？  答：网络安全：指网络系统的软硬件以及系统中存储和传输的数据受到保护，不因偶然的或恶意的原因而遭到破坏、更改、泄露，网络系统连续可靠正常地运行，网络服务不中断。 网络安全的特征(属性)：  机密性。保证信息与信息系统不被非授权的用户、实体或过程所获取与使用。  完整性。信息在存储或传输时不被破坏、修改，或不发生信">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Yuki-r Blog">
-<meta property="og:url" content="http://example.com/2020/11/18/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:url" content="http://example.com/2020/11/23/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.html">
 <meta property="og:site_name" content="Yuki-r Blog">
 <meta property="og:description" content="第一章 概述 计算机网络安全的概念是什么？网络安全有哪几个特征？各特征的含义是什么？  答：网络安全：指网络系统的软硬件以及系统中存储和传输的数据受到保护，不因偶然的或恶意的原因而遭到破坏、更改、泄露，网络系统连续可靠正常地运行，网络服务不中断。 网络安全的特征(属性)：  机密性。保证信息与信息系统不被非授权的用户、实体或过程所获取与使用。  完整性。信息在存储或传输时不被破坏、修改，或不发生信">
 <meta property="og:locale" content="zh_CN">
@@ -33,13 +33,13 @@
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119101729.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119180741.png">
 <meta property="og:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119180753.png">
-<meta property="article:published_time" content="2020-11-18T14:59:02.625Z">
-<meta property="article:modified_time" content="2020-11-23T09:02:26.209Z">
+<meta property="article:published_time" content="2020-11-23T09:48:14.865Z">
+<meta property="article:modified_time" content="2020-11-23T09:48:14.865Z">
 <meta property="article:author" content="Yuki">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/yuki-r/blog-image/raw/master/img/20201119175733.png">
 
-<link rel="canonical" href="http://example.com/2020/11/18/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+<link rel="canonical" href="http://example.com/2020/11/23/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
 
 
 <script id="page-configurations">
@@ -157,7 +157,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/18/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/23/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/suoda.jpg">
@@ -180,15 +180,8 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-11-18 22:59:02" itemprop="dateCreated datePublished" datetime="2020-11-18T22:59:02+08:00">2020-11-18</time>
+              <time title="创建时间：2020-11-23 17:48:14" itemprop="dateCreated datePublished" datetime="2020-11-23T17:48:14+08:00">2020-11-23</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-23 17:02:26" itemprop="dateModified" datetime="2020-11-23T17:02:26+08:00">2020-11-23</time>
-              </span>
 
           
 
@@ -324,6 +317,7 @@
 <li>请简要说明如何通过<code>RSA</code>算法进行消息认证。</li>
 </ol>
 <blockquote>
+<p><code>RSA</code>数字签名算法包括签名算法和验证签名算法。首先用<code>MD5</code>算法对信息作散列计算。签名的过程需用户的私钥，验证过程需要用户的公钥。A用签名算法将字符串形式的消息处理成签名；B用验证签名算法验证签名是否是A对消息的签名，确认是A发送的消息，则消息没有被篡改过，A一定发送过消息。</p>
 </blockquote>
 <h3 id="三、综合题"><a href="#三、综合题" class="headerlink" title="三、综合题"></a>三、综合题</h3><ol>
 <li><code>IPSec</code>和<code>IP</code>协议以及<code>VPN</code>的关系是什么？</li>
@@ -408,13 +402,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/10/25/Android/SunFlower%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="prev" title="SunFlower源码解析">
-      <i class="fa fa-chevron-left"></i> SunFlower源码解析
+    <a href="/2020/11/21/Android/%E5%9B%A2%E9%98%9F%E4%BD%9C%E4%B8%9A5%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%8F%91%E5%B8%83%EF%BC%88Alpha%E7%89%88%E6%9C%AC%EF%BC%89/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/11/21/Android/%E5%9B%A2%E9%98%9F%E4%BD%9C%E4%B8%9A5%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%8F%91%E5%B8%83%EF%BC%88Alpha%E7%89%88%E6%9C%AC%EF%BC%89/" rel="next" title="">
-       <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -489,7 +480,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
