@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="题解一、链表1.反转链表 迭代：设置前后指针保存当前节点的前后节点，使用While循环把当前节点的next指针指向前一个节点,移动指针。  123456789ListNode curr &#x3D; head;  &#x2F;&#x2F;当前节点   ListNode prv &#x3D; null; &#x2F;&#x2F;存储上一个节点   while(curr!&#x3D;null)&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yuki-r Blog">
+<meta property="og:url" content="http://example.com/2021/03/30/%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Yuki-r Blog">
+<meta property="og:description" content="题解一、链表1.反转链表 迭代：设置前后指针保存当前节点的前后节点，使用While循环把当前节点的next指针指向前一个节点,移动指针。  123456789ListNode curr &#x3D; head;  &#x2F;&#x2F;当前节点   ListNode prv &#x3D; null; &#x2F;&#x2F;存储上一个节点   while(curr!&#x3D;null)&amp;#12">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-29T16:19:20.525Z">
+<meta property="article:modified_time" content="2021-03-30T08:33:23.654Z">
+<meta property="article:author" content="Yuki">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/30/%E9%A2%98%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Yuki-r Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yuki-r Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/30/%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/suoda.jpg">
+      <meta itemprop="name" content="Yuki">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuki-r Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-30 00:19:20 / 修改时间：16:33:23" itemprop="dateCreated datePublished" datetime="2021-03-30T00:19:20+08:00">2021-03-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><h2 id="一、链表"><a href="#一、链表" class="headerlink" title="一、链表"></a>一、链表</h2><h3 id="1-反转链表"><a href="#1-反转链表" class="headerlink" title="1.反转链表"></a>1.反转链表</h3><ul>
+<li>迭代：设置前后指针保存当前节点的前后节点，使用While循环把当前节点的next指针指向前一个节点,移动指针。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ListNode curr &#x3D; head;  &#x2F;&#x2F;当前节点</span><br><span class="line">   ListNode prv &#x3D; null; &#x2F;&#x2F;存储上一个节点</span><br><span class="line">   while(curr!&#x3D;null)&#123;  &#x2F;&#x2F;遍历链表</span><br><span class="line">       ListNode next &#x3D; curr.next;  &#x2F;&#x2F;存放当前节点的下一个节点</span><br><span class="line">       curr.next &#x3D; prv;  &#x2F;&#x2F;把当前节点的指针指向前一个节点</span><br><span class="line">       prv  &#x3D; curr; &#x2F;&#x2F; 把当前的节点</span><br><span class="line">       curr &#x3D; next ;</span><br><span class="line">   &#125;</span><br><span class="line">   return prv;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>递归：递归三要素：<strong>①可以分解为两个子问题 ② 子问题求解方式相同 ③ 有最小子问题</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if(head&#x3D;&#x3D;null||head.next&#x3D;&#x3D;null)&#123; </span><br><span class="line">         return head;</span><br><span class="line">     &#125;</span><br><span class="line">     ListNode p  &#x3D; reverseList(head.next);</span><br><span class="line">     &#x2F;&#x2F;归的过程需要做的事</span><br><span class="line">     head.next.next &#x3D; head ;  &#x2F;&#x2F;归的过程开始反转</span><br><span class="line">     head.next &#x3D; null; &#x2F;&#x2F;当前节点的前节点置位null，考虑到头结点的情况</span><br><span class="line">     return p;&#x2F;&#x2F;归的过程返回的已反转链表的头结点</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、字符串"><a href="#二、字符串" class="headerlink" title="二、字符串"></a>二、字符串</h2><h3 id="1-无重复字符串的最长字符串"><a href="#1-无重复字符串的最长字符串" class="headerlink" title="1.无重复字符串的最长字符串"></a>1.无重复字符串的最长字符串</h3><ul>
+<li>双指针：使用前后指针+HashSet保存最长字符串中的字符+记录最大长度的max值。使用两个while循环，第一个while循环用来移动前指针，判断前指针指向的元素是否与HashSet中存储的元素相同，若相同，使用第二个while循环把后指针移动到相同元素的后一位。当前指针移动到字符串最后的元素时，遍历结束。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">int prev &#x3D; 0,back &#x3D; 0;</span><br><span class="line">      HashSet&lt;Character&gt; hashSet &#x3D; new HashSet&lt;Character&gt;();</span><br><span class="line">      int max &#x3D; 0;</span><br><span class="line">      &#x2F;&#x2F;前指针到终点即为结束</span><br><span class="line">      while(prev&lt;&#x3D;s.length()-1)&#123;</span><br><span class="line">          if (!hashSet.contains(s.charAt(prev)))&#123;  &#x2F;&#x2F;当前元素与set中元素不同，前指针+1</span><br><span class="line">              hashSet.add(s.charAt(prev));</span><br><span class="line">              int temp &#x3D; prev-back+1;</span><br><span class="line">              max &#x3D; Math.max(temp,max);  &#x2F;&#x2F;保存最长的长度</span><br><span class="line">          &#125;else&#123;  &#x2F;&#x2F;当前元素与set中元素有相同的。back指针走到相同元素后</span><br><span class="line">              while(s.charAt(back)!&#x3D;s.charAt(prev))&#123;</span><br><span class="line">                  hashSet.remove(s.charAt(back));  &#x2F;&#x2F;移除set在相同元素前的元素</span><br><span class="line">                  back++;</span><br><span class="line">              &#125;</span><br><span class="line">              back++; &#x2F;&#x2F;越过相同元素</span><br><span class="line">          &#125;</span><br><span class="line">          prev++;</span><br><span class="line">      &#125;</span><br><span class="line">      return max;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>滑动窗口</li>
+</ul>
+<p>使用左右指针，右指针往右移，并且把遍历到的字符和下标存入map中。出现与map中字符相同的元素就开始移动左指针，左指针有两个可能性：相同元素数组下标+1，上次的left指针下标。这里出现两种情况是因为map中相同的元素有可能不在最长字符串中了，记录最长字符串的长度。</p>
+<p>举例：abba，当left指针指向了b，right指针指向了a，此时map中有与a相同的元素，数组下标是1。但是下标为0的a已经不在最长字符串中了，此时的最长字符串为“ba”所以此时left的值应该是上次left的值，即指向b的下标。</p>
+<p>当 right 指针指向字符串的最后一个元素时，结束循环，返回字符串的长度。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;滑动窗口</span><br><span class="line">  int left &#x3D; 0,right&#x3D;0;</span><br><span class="line">  int max &#x3D; 0; &#x2F;&#x2F;返回的长度</span><br><span class="line">  HashMap&lt;Character,Integer&gt; map &#x3D; new  HashMap&lt;Character,Integer&gt;();</span><br><span class="line">  while (right&lt;s.length())&#123;</span><br><span class="line">      &#x2F;&#x2F;当map中没有与当前元素相同的值时，right右移</span><br><span class="line">    if (map.containsKey(s.charAt(right)))&#123;</span><br><span class="line">        &#x2F;&#x2F;当相同元素不在最长字符串中时left &#x3D; left</span><br><span class="line">        &#x2F;&#x2F;当相同元素在最长字符串中时，lef &#x3D;  get(s.charAt(right))+1</span><br><span class="line">         left &#x3D; Math.max(left,map.get(s.charAt(right))+1);</span><br><span class="line">     &#125;</span><br><span class="line">     &#x2F;&#x2F;把遍历到的每一个元素放入map中</span><br><span class="line">     map.put(s.charAt(right),right);</span><br><span class="line">     max &#x3D; Math.max(max,right - left +1);</span><br><span class="line">     right++;</span><br><span class="line">  &#125;</span><br><span class="line">  return max;</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/06/JVM%E7%AC%94%E8%AE%B0/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/30/%E7%AE%97%E6%B3%95/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%93%BE%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">一、链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.反转链表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.2.</span> <span class="nav-text">二、字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.无重复字符串的最长字符串</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yuki"
+      src="/images/suoda.jpg">
+  <p class="site-author-name" itemprop="name">Yuki</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Yuki-r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Yuki-r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yuki</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
